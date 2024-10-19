@@ -77,6 +77,20 @@ export function MainNavLinks() {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <motion.div whileHover={{ scale: 1.2 }}>
+            <Link href="/metrics" legacyBehavior passHref>
+              <NavigationMenuLink
+                className={cn(
+                  navigationMenuTriggerStyle(),
+                  "text-[#344966] hover:bg-[#344966] hover:text-white rounded-xl"
+                )}
+              >
+                <div className="text-2xl font-bold">Metrics</div>
+              </NavigationMenuLink>
+            </Link>
+          </motion.div>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <motion.div whileHover={{ scale: 1.2 }}>
             <Link href="/login" legacyBehavior passHref>
               <NavigationMenuLink
                 className={cn(
