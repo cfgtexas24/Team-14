@@ -1,6 +1,7 @@
-import { Globe, UserRound } from 'lucide-react';
-import { login, signup } from "../login/actions";
+"use client";
 
+import { Globe, UserRound } from 'lucide-react';
+import { signup } from "../login/actions";
 import {
   Card,
   CardContent,
@@ -11,9 +12,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { useState } from 'react';
+import Link from 'next/link';
 
+const Signup1: React.FC = () => {
+  const [role, setRole] = useState<'candidate' | 'employer' | null>(null);
 
-const Signup1 = () => {
+  const handleRoleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRole(event.target.value as 'candidate' | 'employer');
+  };
+
   return (
     <section className="flex items-center justify-center min-h-screen py-32">
       <div className="container">
@@ -27,33 +35,64 @@ const Signup1 = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form className="grid gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="Type here..."
-                    required
-                  />
+              <form>
+                <div className="grid gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      name="email"
+                      placeholder="Type here..."
+                      required
+                    />
 
-                  <Label htmlFor="password">Password</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    placeholder="Type here..."
-                    required
-                  />
+                    <Label htmlFor="password">Password</Label>
+                    <Input
+                      id="password"
+                      type="password"
+                      name="password"
+                      placeholder="Type here..."
+                      required
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label>Role</Label>
+                    <div className="flex gap-4">
+                      <label>
+                        <input
+                          type="radio"
+                          name="candidate"
+                          value="candidate"
+                          checked={role === 'candidate'}
+                          onChange={handleRoleChange}
+                        />
+                        Candidate
+                      </label>
+                      <label>
+                        <input
+                          type="radio"
+                          name="employer"
+                          value="employer"
+                          checked={role === 'employer'}
+                          onChange={handleRoleChange}
+                        />
+                        Employer
+                      </label>
+                    </div>
+                  </div>
+                  <Button type="submit" className="w-full" formAction={signup}>
+                    Sign up
+                  </Button>
                 </div>
-                <Button type="submit" className="w-full" formAction={signup}>Sign up</Button>
               </form>
             </CardContent>
           </Card>
           <div className="mx-auto flex gap-1 text-sm">
             <p>Already have an account?</p>
-            <a href="/login" className="underline">
+            <Link href="/login" className="underline">
               Log in
-            </a>
+            </Link>
           </div>
         </div>
       </div>
