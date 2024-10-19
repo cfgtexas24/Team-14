@@ -16,7 +16,6 @@ import employment from "@/assets/employment.jpg";
 import family from "@/assets/family.jpg";
 import geographical from "@/assets/geographical.png";
 import socioeconomic from "@/assets/socioeconomic.jpg";
-
 import Link from "next/link";
 
 const defaultOptions = {

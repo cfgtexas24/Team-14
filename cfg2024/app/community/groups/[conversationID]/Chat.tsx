@@ -58,8 +58,8 @@ export default function Chat({ conversationID }: ChatProps) {
       if (!user) return null;
 
       const conversation = session.getOrCreateConversation(conversationID);
-      conversation.setParticipant(session.me);
 
+      conversation.setParticipant(session.me);
       // In a real application, add other participants programmatically here if needed
 
       return conversation;
