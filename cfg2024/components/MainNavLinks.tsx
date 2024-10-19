@@ -60,6 +60,14 @@ export function MainNavLinks() {
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
+        {/* New "Book Meetings" Link */}
+        <NavigationMenuItem>
+          <Link href="/bookings" legacyBehavior passHref>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              Book Meetings
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );
