@@ -1,9 +1,6 @@
 "use client";
 
-import React from "react";
-import { Session, Chatbox } from "@talkjs/react";
-import Talk from "talkjs";
-import { useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { Tilt } from "react-tilt";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,34 +17,60 @@ import employment from "@/assets/employment.jpg";
 import family from "@/assets/family.jpg";
 import geographical from "@/assets/geographical.png";
 import socioeconomic from "@/assets/socioeconomic.jpg";
+import { getCurrentUser } from "./action";
+import { User } from "@supabase/supabase-js";
+import Chat from "./Chat";
+
+const defaultOptions = {
+  reverse: false,
+  max: 35,
+  perspective: 1000,
+  scale: 1.1,
+  speed: 1000,
+  transition: true,
+  axis: null,
+  reset: true,
+  easing: "cubic-bezier(.03,.98,.52,.99)",
+};
 
 const Match = () => {
-  const syncUser = useCallback(
-    () =>
-      new Talk.User({
-        id: "nina",
-        name: "Nina",
-        email: "nina@example.com",
-        photoUrl: "https://talkjs.com/new-web/avatar-7.jpg",
-        welcomeMessage: "Hi!",
-      }),
-    []
-  );
+  const [conversationID, setConversationID] = useState<string | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
-  const defaultOptions = {
-    reverse: false, // reverse the tilt direction
-    max: 35, // max tilt rotation (degrees)
-    perspective: 1000, // Transform perspective, the lower the more extreme the tilt gets.
-    scale: 1.1, // 2 = 200%, 1.5 = 150%, etc..
-    speed: 1000, // Speed of the enter/exit transition
-    transition: true, // Set a transition on enter/exit.
-    axis: null, // What axis should be disabled. Can be X or Y.
-    reset: true, // If the tilt effect has to be reset on exit.
-    easing: "cubic-bezier(.03,.98,.52,.99)", // Easing on enter/exit.
+  useEffect(() => {
+    console.log("conversationID changed:", conversationID); // Debugging
+
+    // Fetch the current user
+    async function fetchUser() {
+      try {
+        const { user } = await getCurrentUser();
+        setUser(user);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    }
+
+    fetchUser();
+  }, []);
+
+  const handleJoin = (id: string) => {
+    console.log("Join button clicked with id:", id); // Debugging
+
+    setConversationID(id);
   };
 
+  const handleClick = async () => {
+    const { user, session } = await getCurrentUser();
+    console.log("User:", user?.id);
+    console.log("Session:", session?.user.id);
+  };
+  if (!user) {
+    return <div>Please log in to join a group chat.</div>;
+  }
+
   return (
-    <div>
+    <div >
+      <Button onClick={handleClick}>FETCH USERS</Button>
       <div className="mt-12 flex flex-wrap items-center justify-center gap-12 max-w-7xl mx-auto">
         <Tilt options={defaultOptions}>
           <div className="flex items-center justify-center">
@@ -69,7 +92,9 @@ const Match = () => {
                 />
               </CardContent>
               <CardContent className="flex flex-col items-center">
-                <Button>Join</Button>
+                <Button onClick={() => handleJoin("socioeconomic")}>
+                  Join
+                </Button>
               </CardContent>
             </Card>
           </div>
@@ -94,7 +119,7 @@ const Match = () => {
                 />
               </CardContent>
               <CardContent className="flex flex-col items-center">
-                <Button>Join</Button>
+                <Button onClick={() => handleJoin("educational")}>Join</Button>
               </CardContent>
             </Card>
           </div>
@@ -119,7 +144,7 @@ const Match = () => {
                 />
               </CardContent>
               <CardContent className="flex flex-col items-center">
-                <Button>Join</Button>
+                <Button onClick={() => handleJoin("employment")}>Join</Button>
               </CardContent>
             </Card>
           </div>
@@ -144,7 +169,7 @@ const Match = () => {
                 />
               </CardContent>
               <CardContent className="flex flex-col items-center">
-                <Button>Join</Button>
+                <Button onClick={() => handleJoin("family")}>Join</Button>
               </CardContent>
             </Card>
           </div>
@@ -170,7 +195,9 @@ const Match = () => {
                 />
               </CardContent>
               <CardContent className="flex flex-col items-center">
-                <Button>Join</Button>
+                <Button onClick={() => handleJoin("cultural_and_ethnic")}>
+                  Join
+                </Button>
               </CardContent>
             </Card>
           </div>
@@ -196,14 +223,14 @@ const Match = () => {
                 />
               </CardContent>
               <CardContent className="flex flex-col items-center">
-                <Button>Join</Button>
+                <Button onClick={() => handleJoin("geographical")}>Join</Button>
               </CardContent>
             </Card>
           </div>
         </Tilt>
       </div>
 
-      <Session
+      {/* <Session
         appId="t3Z7QMmB"
         userId="sample_user_sebastian"
         syncUser={syncUser}
@@ -212,7 +239,9 @@ const Match = () => {
           conversationId="sample_group_chat"
           style={{ width: "100%", height: "500px" }}
         ></Chatbox>
-      </Session>
+      </Session> */}
+
+      {conversationID && <Chat conversationID={conversationID} />}
     </div>
   );
 };
