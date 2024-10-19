@@ -1,5 +1,4 @@
-"use client"
-import React, { useState } from 'react';
+import React from 'react';
 import {
     Card,
     CardContent,
@@ -8,39 +7,60 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { job_title } from "./actions";
+import { createClient } from '@/utils/supabase/server';
 
-export default function Page() {
-    const [jobData, setJobData] = useState<string | null>(null);
+export interface JobPostingData {
+  id?: number;
+  title: string;
+  description: string;
+  salary: number;
+  recruiter: string;
+  skills: string[]; // Changed from OptionType[] to string[]
+  qualification: string; // Changed from qualifications: OptionType
+  company: string;
+}
 
-    const handleClick = async () => {
-        const result = await job_title();
+async function getJobs() {
+  const supabase = createClient();
 
-        if (result.success) {
-            setJobData(result.data);
-            console.log(result.data);
-        } else {
-            console.error("Error fetching data:", result.error);
-        }
-    };
+  const { data, error } = await supabase
+    .from("Job")
+    .select("id, title, description, salary, recruiter, skills, qualification, company");
+
+  if (error) {
+    console.error(error);
+    return { success: false, error, jobs: [] };
+  }
+
+  return { success: true, jobs: data as JobPostingData[] };
+}
+
+export default async function Page() {
+    const { success, jobs } = await getJobs();
+
+    if (!success) {
+        return <div>Error loading jobs</div>;
+    }
 
     return (
-        <div className="flex justify-center">
-            <Card className='box-border w-1/2'>
+        <div className="flex flex-col items-center space-y-4">
+          {jobs.map((job: JobPostingData) => (
+            <Card key={job.id} className='box-border w-1/2'>
                 <CardHeader>
-                    <CardTitle>Job Title</CardTitle>
-                    <CardDescription>Job Description</CardDescription>
+                    <CardTitle>{job.title}</CardTitle>
+                    <CardDescription>{job.company}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <CardDescription className='text-color black'>Location</CardDescription>
+                    <p>{job.description}</p>
                 </CardContent>
                 <CardFooter>
-                    <CardDescription className='text-clip overflow-hidden'>Skills</CardDescription>
+                    <CardDescription className='text-clip overflow-hidden'>
+                        Skills: {Array.isArray(job.skills) ? job.skills.join(', ') : job.skills}<br></br>
+                        Qualification: {job.qualification}
+                    </CardDescription>
                 </CardFooter>
-                <Button onClick={handleClick}>Fetch Jobs</Button>
             </Card>
-
+          ))}
         </div>
     );
 }
