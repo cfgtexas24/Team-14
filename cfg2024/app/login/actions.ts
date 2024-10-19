@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
+import { useRouter } from "next/navigation";
 
 type SignupResult = {
   success: boolean;
@@ -12,6 +13,7 @@ type SignupResult = {
 
 export async function login(formData: FormData) {
   const supabase = createClient();
+  const router = useRouter()
 
   const data = {
     email: formData.get("email") as string,
@@ -26,7 +28,7 @@ export async function login(formData: FormData) {
   }
 
   revalidatePath("/", "layout");
-  redirect("/");
+  router.push("/");
 }
 
 export async function signup(formData: FormData): Promise<SignupResult> {
@@ -98,5 +100,6 @@ export async function signup(formData: FormData): Promise<SignupResult> {
 export async function signOut() {
   const supabase = createClient();
   await supabase.auth.signOut();
-  redirect("/login");
+  revalidatePath('/', 'layout');
+  redirect('/login')
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,11 +12,41 @@ import {
 import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 import { signOut } from "@/app/login/actions";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/utils/supabase/client";
 
 export function MainNavLinks() {
   const [isCandidateOpen, setIsCandidateOpen] = useState(false);
   const [isEmployeeOpen, setIsEmployeeOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
+  const supabase = createClient();
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setIsLoggedIn(!!session);
+    };
+
+    checkUser();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      setIsLoggedIn(!!session);
+    });
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, [supabase.auth]);
+
+  const handleSignOut = async () => {
+    await signOut();
+    await supabase.auth.signOut();
+    setIsLoggedIn(false);
+    router.push('/login');
+  };
+
+  console.log("Is logged in:", isLoggedIn); // Debug log
 
   return (
     <nav className="bg-white">
@@ -70,7 +100,7 @@ export function MainNavLinks() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-
+  
             {/* Employee Dropdown */}
             <DropdownMenu
               open={isEmployeeOpen}
@@ -115,34 +145,30 @@ export function MainNavLinks() {
             </DropdownMenu>
           </div>
           <div className="flex ml-8 space-x-8">
-            {/* Login and Logout Buttons */}
-
-            <form action={signOut}>
+            {isLoggedIn ? (
               <motion.div
                 whileHover={{ scale: 1.15 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Link
-                  onClick={() => {
-                    signOut();
-                  }}
-                  href="/login"
-                  className={`text-[#344966] bg-white text-2xl font-bold`}
+                <Button
+                  onClick={handleSignOut}
+                  className="hover:text-[#344966] text-white hover:bg-white text-2xl font-bold"
                 >
                   Logout
+                </Button>
+              </motion.div>
+            ) : (
+              <motion.div
+                whileHover={{ scale: 1.15 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <Link href="/login">
+                  <Button className="text-2xl font-bold" variant={"default"}>
+                    Login
+                  </Button>
                 </Link>
               </motion.div>
-            </form>
-            <motion.div
-              whileHover={{ scale: 1.15 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <Link href="/login">
-                <Button className="text-2xl font-bold" variant={"default"}>
-                  Login
-                </Button>
-              </Link>
-            </motion.div>
+            )}
           </div>
         </div>
       </div>
