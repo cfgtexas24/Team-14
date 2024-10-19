@@ -72,14 +72,14 @@ export default function Chat({ conversationID }: ChatProps) {
   }
 
   return (
-    <div className="chat-container">
+    <div className="chat-container flex items-center justify-center">
       <TalkSession
         appId={process.env.NEXT_PUBLIC_TALKJS_APP_ID!}
         syncUser={syncUser}
       >
         <Chatbox
           syncConversation={syncConversation}
-          style={{ width: "100%", height: "500px" }}
+          style={{ width: "300%", height: "500px" }}
         />
       </TalkSession>
     </div>
