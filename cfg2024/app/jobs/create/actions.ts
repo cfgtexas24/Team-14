@@ -26,7 +26,7 @@ export async function submitJobPosting(data: JobPostingFormData) {
           description: data.description,
           salary: data.salary,
           recruiter: data.recruiter,
-          skills: skillsArray.toString,
+          skills: skillsArray,
           qualification: qualificationValue,
           company: data.company
         }
