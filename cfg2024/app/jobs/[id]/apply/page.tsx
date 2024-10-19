@@ -8,7 +8,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { getJob } from "./action";
+import { getJob, getUser } from "./action";
 
 interface PageParams {
     id: number;
@@ -28,11 +28,12 @@ export interface JobPostingData {
 export default async function Page({ params }: { params: PageParams }) {
     const id = params.id;
     const { success, job } = await getJob(id);
-
+    const user = await getUser();
     if (!success) {
         return <div>Error loading jobs</div>;
     }
 
+    
     return (
         <div className="flex flex-col items-center space-y-4">
             {job.map((job: JobPostingData) => (
