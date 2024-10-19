@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { fetchUserData, uploadResume, saveUserProfile } from "./actions";
+import { fetchUserData, saveUserProfile } from "./actions";
 
 interface FormData {
   firstName: string;
@@ -17,6 +17,23 @@ interface FormData {
   linkedin?: string;
   roles?: string;
   resume?: File | null;
+}
+
+async function handleFileUpload(file: File, firstName: string) {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('firstName', firstName);
+
+  const response = await fetch('/api/upload-resume', {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to upload file');
+  }
+
+  return await response.json();
 }
 
 export default function Profile() {
@@ -81,14 +98,24 @@ export default function Profile() {
       setErrors(formErrors);
       return;
     }
-
+  
     let resumeUrl = null;
     if (formData.resume) {
-      resumeUrl = await uploadResume(formData.firstName, formData.resume);
+      try {
+        const uploadResult = await handleFileUpload(formData.resume, formData.firstName);
+        resumeUrl = uploadResult.url;
+      } catch (error) {
+        console.error('Error uploading file:', error);
+        setMessage("Error uploading resume. Please try again.");
+        return;
+      }
     }
-
-    const success = await saveUserProfile(formData.firstName, formData, resumeUrl);
-
+  
+    const success = await saveUserProfile({
+      ...formData,
+      resume: undefined  // Remove the File object
+    }, resumeUrl);
+  
     if (success) {
       setMessage("Profile updated successfully!");
       setErrors({});

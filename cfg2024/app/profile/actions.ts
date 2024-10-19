@@ -22,32 +22,17 @@ export async function fetchUserData() {
   return null;
 }
 
-export async function uploadResume(userId: string, file: File) {
-  const fileExt = file.name.split('.').pop()
-  const fileName = `${userId}/${Math.random()}.${fileExt}`
-  const { data, error } = await supabase.storage
-    .from('resumes')  // Make sure this matches your bucket name
-    .upload(fileName, file)
-
-  if (error) {
-    console.error("Error uploading file:", error);
-    return null;
-  }
-
-  // Get the public URL of the uploaded file
-  const { data: { publicUrl } } = supabase.storage
-    .from('resumes')
-    .getPublicUrl(fileName)
-
-  return publicUrl;
-}
-
 export async function getResumeUrl(path: string) {
   const { data } = supabase.storage.from('resumes').getPublicUrl(path)
   return data.publicUrl;
 }
 
-export async function saveUserProfile(userId: string, profileData: any, resumeUrl: string | null) {
+export async function saveUserProfile(profileData: any, resumeUrl: string | null) {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    return false;
+  }
+
   const { error } = await supabase
     .from('custom_users')
     .update({
@@ -62,7 +47,7 @@ export async function saveUserProfile(userId: string, profileData: any, resumeUr
       roles: profileData.roles,
       resume_url: resumeUrl || undefined,
     })
-    .eq('id', userId)
+    .eq('id', user.id);
 
   if (error) {
     console.error("Error updating profile:", error);
