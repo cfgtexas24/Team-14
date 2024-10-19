@@ -44,8 +44,11 @@
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",
     "react-select": "^5.8.1",
+    "react-hook-form": "^7.53.0",
+    "react-select": "^5.8.1",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.23.8",
     "zod": "^3.23.8"
 >>>>>>> e61d9d61a6d2dd301dfdff44f05592feea96aa7d
   },

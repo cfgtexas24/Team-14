@@ -35,7 +35,9 @@ export async function signup(formData: FormData) {
     email: formData.get("email") as string,
     password: formData.get("password") as string,
     role: formData.get("role") as string,
+    role: formData.get("role") as string,
   };
+  console.log(data);
   console.log(data);
   const { error } = await supabase.auth.signUp(data);
 
@@ -49,6 +51,11 @@ export async function signup(formData: FormData) {
   }
 
   revalidatePath("/", "layout");
+  if (data.role == 'candidate') {
+    redirect("/profile");
+  } else {
+    redirect("/");
+  }
   if (data.role == 'candidate') {
     redirect("/profile");
   } else {
