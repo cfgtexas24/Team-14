@@ -25,6 +25,16 @@ type User = {
   resume_url?: string;
 };
 
+async function getCurrentUserId() {
+  const supabase = createClient();
+  const { data: { user }, error } = await supabase.auth.getUser();
+  if (error) {
+      console.error('Error fetching current user:', error);
+      return null;
+  }
+  return user?.id || null;
+}
+
 async function getUser(id: number) {
     const supabase = createClient();
   
@@ -50,12 +60,14 @@ interface PageParams {
 export default async function Page({ params }: { params: PageParams }) {
     const id = params.id;
     const { success, user } = await getUser(id);
+    const currentUserId = await getCurrentUserId();
 
     if (!success || !user) {
         return <div>Error loading User</div>;
     }
 
     const isPDF = user.resume_url?.toLowerCase().endsWith('.pdf');
+    const isOwnProfile = currentUserId === user.id;
 
     return (
       <div className="flex flex-col items-center space-y-4">
@@ -98,11 +110,13 @@ export default async function Page({ params }: { params: PageParams }) {
                       </CardDescription>
                   )}
               </CardFooter>
-              <div className='flex justify-end p-4'>
-                  <Link href={`/profile`}>
-                      <Button className='px-8 py-6 text-2xl'>Edit Profile</Button>
-                  </Link>
-              </div>
+              {isOwnProfile && (
+                <div className='flex justify-end p-4'>
+                    <Link href={`/profile`}>
+                        <Button className='px-8 py-6 text-2xl'>Edit Profile</Button>
+                    </Link>
+                </div>
+              )}
           </Card>
       </div>
   );
