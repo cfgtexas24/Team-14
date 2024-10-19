@@ -25,7 +25,14 @@ export function MainNavLinks() {
         <NavigationMenuItem>
           <Link href="/jobs/create" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Post A Job
+              Post a Job
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <Link href="/community" legacyBehavior passHref>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              Community
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>

@@ -21,6 +21,7 @@ export async function login(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
+    console.error(error);
     redirect("/error");
   }
 
@@ -35,6 +36,7 @@ export async function signup(formData: FormData): Promise<SignupResult> {
   const data = {
     email: formData.get("email") as string,
     password: formData.get("password") as string,
+    role: formData.get("role") as string,
     role: formData.get("role") as string,
   };
 
