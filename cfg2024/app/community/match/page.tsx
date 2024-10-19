@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/card";
 import { createLike, fetchAllUsers } from "./actions"; // Import necessary functions
 
+// Keep your existing defaultOptions as they are
 const defaultOptions = {
   reverse: false,
   max: 35,
@@ -22,6 +23,36 @@ const defaultOptions = {
   axis: null,
   reset: true,
   easing: "cubic-bezier(.03,.98,.52,.99)",
+};
+
+// Fun Facts List
+const funFacts = [
+  "I love hiking and exploring nature trails.",
+  "I’m a huge fan of sci-fi movies.",
+  "I once went skydiving and loved it!",
+  "I play the guitar in my free time.",
+  "I’m a black belt in karate.",
+  "I enjoy cooking and experimenting with new recipes.",
+  "I’ve visited over 20 countries.",
+  "I’m an amateur photographer.",
+  "I can solve a Rubik's cube in under a minute.",
+  "I’m a huge fan of board games.",
+  "I love reading mystery novels in my spare time.",
+  "I’ve completed three full marathons.",
+  "I speak three languages fluently.",
+  "I have a collection of vintage vinyl records.",
+  "I love volunteering at animal shelters on weekends.",
+  "I’m learning to surf and it's so much fun!",
+  "I’ve climbed the tallest mountains in five countries.",
+  "I bake amazing chocolate chip cookies.",
+  "I once lived in a tiny house for a year.",
+  "I can juggle five balls at the same time."
+];
+
+// Function to get a random fun fact
+const getRandomFunFact = () => {
+  const randomIndex = Math.floor(Math.random() * funFacts.length);
+  return funFacts[randomIndex];
 };
 
 const CardWithForm = () => {
@@ -107,13 +138,13 @@ const CardWithForm = () => {
                     
                     <CardContent>
                       <div className="grid w-full items-center gap-4">
-                        {/* Fun Fact Section with Simple Styling */}
+                        {/* Fun Fact Section with Random Fun Fact */}
                         <div className="flex flex-col space-y-1.5">
                           <label htmlFor="funFact" className="text-xl font-semibold text-black">
                             Fun Fact:
                           </label>
                           <div id="funFact" className="text-lg font-medium text-black">
-                            {user.funFact || "I love to..."} {/* Example of dynamic fun fact */}
+                            {getRandomFunFact()} {/* Random fun fact for each user */}
                           </div>
                         </div>
                       </div>
