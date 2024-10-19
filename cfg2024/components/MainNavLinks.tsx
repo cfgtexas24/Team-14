@@ -123,12 +123,11 @@ export function MainNavLinks() {
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <Link
-                  href="/"
-                  className="text-[#344966] bg-white text-2xl font-bold"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    redirect("/login");
+                  onClick={() => {
+                    signOut();
                   }}
+                  href="/login"
+                  className={`text-[#344966] bg-white text-2xl font-bold`}
                 >
                   Logout
                 </Link>
