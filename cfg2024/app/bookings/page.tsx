@@ -198,7 +198,7 @@ const CalendarDemo = () => {
             <p>Meeting confirmation sent to: {submittedData?.emails.join(", ")}</p>
             <button 
               onClick={handleCloseConfirmation} 
-              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+              className="mt-4 px-4 py-2 bg-[#344966] text-white rounded"
             >
               OK
             </button>
