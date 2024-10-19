@@ -18,18 +18,18 @@ const ChatPage = () => {
   }
 
   return (
-    <div className="pl-20  mx-auto max-w-7xl">
+    <div className="pl-20  mx-auto max-w-8xl">
       <section className="flex items-center justify-center py-32">
-        <div className="container max-w-6xl">
+        <div className="container max-w-8xl">
           <div className="flex flex-col gap-12 md:flex-row">
-            <div className="max-h-96 w-full rounded-lg object-cover md:max-h-[500px] md:w-1/2">
+            <div className="max-h-screen w-full rounded-lg object-cover pl-10 md:w-2/3 md:pr-6">
               <Chat conversationID={conversationID as string} />
             </div>
-            <div className="lg:p-10">
+            <div className="lg:p-6">
               <h2 className="text-balance text-3xl font-medium md:text-5xl">
                 Group {conversationID}:
               </h2>
-              <p className="mt-1 text-muted-foreground md:mt-6">
+              <p className="mt-1 text-muted-foreground md:mt-10">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum
                 alias unde et doloremque dignissimos error temporibus quisquam
                 porro ducimus esse quod, a officiis.

@@ -64,59 +64,62 @@ const CardWithForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen space-y-4">
+    <div className="relative w-full h-screen flex justify-center items-center">
+      {" "}
+      {/* Container to hold cards */}
       {/* Render user cards */}
       {users.length > 0 ? (
-        users.map((user) => (
-          !swiped[user.id] && (
-            <TinderCard
-              key={user.id}
-              onSwipe={(dir) => handleSwipe(dir, user.id)} // Pass likedId to handleSwipe
-              preventSwipe={["up", "down"]} // Prevent vertical swipes
-            >
-              <Tilt options={defaultOptions} style={{ height: 400, width: 350 }}>
-                <Card className="w-full">
-                  <CardHeader>
-                    <CardTitle>{user.firstName} {user.lastName}</CardTitle>
-                  </CardHeader>
-                  <div className="w-full h-40">
-                    <img
-                      src="https://via.placeholder.com/350x150"
-                      alt="Profile"
-                      className="w-full h-full object-cover rounded-t"
-                    />
-                  </div>
-                  <CardContent>
-                    <div className="grid w-full items-center gap-4">
-                      <div className="flex flex-col space-y-1.5">
-                        <label htmlFor="funFact">Fun Fact:</label>
-                        <div id="funFact" className="p-2">
-                          I love to...
+        users.map(
+          (user, index) =>
+            !swiped[user.id] && (
+              <TinderCard
+                key={user.id}
+                onSwipe={(dir) => handleSwipe(dir, user.id)} // Pass likedId to handleSwipe
+                preventSwipe={["up", "down"]} // Prevent vertical swipes
+                className="absolute" // This makes the cards stack
+                style={{ zIndex: users.length - index }} // Set z-index for stacking cards
+              >
+                <Tilt
+                  options={defaultOptions}
+                  style={{ height: 400, width: 350 }}
+                >
+                  <Card className="w-full">
+                    <CardHeader>
+                      <CardTitle>{user.email}</CardTitle>{" "}
+                      {/* Display user's email */}
+                      <CardDescription>{user.role}</CardDescription>{" "}
+                      {/* Display user's role */}
+                    </CardHeader>
+                    <div className="w-full h-40">
+                      <img
+                        src="https://via.placeholder.com/350x150" // You can replace this with a profile image if available
+                        alt="Profile"
+                        className="w-full h-full object-cover rounded-t"
+                      />
+                    </div>
+                    <CardContent>
+                      <div className="grid w-full items-center gap-4">
+                        <div className="flex flex-col space-y-1.5">
+                          <label htmlFor="funFact">Fun Fact:</label>
+                          <div id="funFact" className="p-2">
+                            I love to...
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Tilt>
-            </TinderCard>
-          )
-        ))
+                    </CardContent>
+                  </Card>
+                </Tilt>
+              </TinderCard>
+            )
+        )
       ) : (
         <div>No users found</div> // This will only show if no users are available to swipe
       )}
-      
       {/* Display Error Message */}
-      {error && (
-        <div className="text-red-500 text-center mt-4">
-          {error}
-        </div>
-      )}
-
+      {error && <div className="text-red-500 text-center mt-4">{error}</div>}
       {/* "No users found" message will always show below */}
       {users.length === 0 && (
-        <div className="text-gray-500">
-          No users found
-        </div>
+        <div className="text-gray-500">No users found</div>
       )}
     </div>
   );

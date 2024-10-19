@@ -22,6 +22,7 @@ export default function Chat({ conversationID }: ChatProps) {
     async function fetchCurrentUser() {
       try {
         const { user } = await getCurrentUser();
+        console.log(user);
         if (isMounted) {
           setUser(user);
           await Talk.ready; // Wait for TalkJS to be ready
@@ -42,11 +43,12 @@ export default function Chat({ conversationID }: ChatProps) {
   }, []);
 
   const syncUser = useCallback(() => {
+    console.log(user);
     if (!user) return null;
 
     return new Talk.User({
       id: user.id,
-      name: user.email.split("@")[0],
+      name: user.email?.split("@")[0],
       email: user.email,
       photoUrl: "https://talkjs.com/new-web/avatar-1.jpg",
       welcomeMessage: "Hi there! Ready to chat?",
@@ -79,7 +81,7 @@ export default function Chat({ conversationID }: ChatProps) {
       >
         <Chatbox
           syncConversation={syncConversation}
-          style={{ width: "300%", height: "500px" }}
+          style={{ width: "800%", height: "600px" }} // make my chat component bigger
         />
       </TalkSession>
     </div>

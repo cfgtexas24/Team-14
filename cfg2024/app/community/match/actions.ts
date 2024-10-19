@@ -7,7 +7,9 @@ const supabase = createClient();
 // Function to create a like
 export async function createLike(likerId: string, likedId: string) {
   if (!likerId || !likedId) {
-    throw new Error("Both liker_id and liked_id are required to create a like.");
+    throw new Error(
+      "Both liker_id and liked_id are required to create a like."
+    );
   }
 
   const { data, error } = await supabase
@@ -22,11 +24,11 @@ export async function createLike(likerId: string, likedId: string) {
   return data;
 }
 
-// Function to fetch all users 
+// Function to fetch all users
 export async function fetchAllUsers() {
   const { data, error } = await supabase
-    .from("users")
-    .select("id, firstName, lastName"); 
+    .from("custom_users")
+    .select("id, email, role"); // Fetch id, email, and role fields from users table
 
   if (error) {
     console.error("Error fetching users:", error);

@@ -17,7 +17,8 @@ const CalendarDemo = () => {
   const [duration, setDuration] = React.useState<string>("15");
   const [email, setEmail] = React.useState<string>("");
   const [error, setError] = React.useState<string>("");
-  const [showConfirmation, setShowConfirmation] = React.useState<boolean>(false);
+  const [showConfirmation, setShowConfirmation] =
+    React.useState<boolean>(false);
   const [time, setTime] = React.useState<string>("09:00");
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -66,9 +67,9 @@ const CalendarDemo = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <form 
-        onSubmit={handleSubmit} 
-        className="bg-white p-6 rounded shadow-md w-full max-w-md"
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white p-6 rounded-2xl shadow-md w-full max-w-md"
       >
         <div className="mb-4">
           <label htmlFor="meetingType" className="block mb-2 font-semibold">
@@ -119,9 +120,9 @@ const CalendarDemo = () => {
         <div className="flex flex-col items-center mb-4">
           <h2 className="text-lg font-bold mb-4">
             Selected Date: {date ? date.toLocaleDateString() : "None"}
-            <button 
-              type="button" 
-              onClick={handleClearDate} 
+            <button
+              type="button"
+              onClick={handleClearDate}
               className="ml-2 text-red-500"
             >
               Clear
@@ -165,9 +166,9 @@ const CalendarDemo = () => {
         </div>
 
         {error && <p className="text-red-500">{error}</p>}
-        
-        <button 
-          type="submit" 
+
+        <button
+          type="submit"
           className="mt-4 px-4 py-2 bg-blue-500 text-white rounded w-full"
         >
           Submit
@@ -177,16 +178,26 @@ const CalendarDemo = () => {
       {submittedData && (
         <div className="mt-6 p-4 bg-white rounded shadow-md w-full max-w-md">
           <h3 className="font-semibold">Meeting Information</h3>
-          <p><strong>Meeting Type:</strong> {submittedData.meetingType}</p>
-          <p><strong>Selected Date:</strong> {submittedData.date}</p>
-          <p><strong>Selected Time:</strong> {submittedData.time}</p>
-          <p><strong>Duration:</strong> {submittedData.duration}</p>
-          <p><strong>Emails:</strong> {submittedData.emails.join(", ")}</p>
+          <p>
+            <strong>Meeting Type:</strong> {submittedData.meetingType}
+          </p>
+          <p>
+            <strong>Selected Date:</strong> {submittedData.date}
+          </p>
+          <p>
+            <strong>Selected Time:</strong> {submittedData.time}
+          </p>
+          <p>
+            <strong>Duration:</strong> {submittedData.duration}
+          </p>
+          <p>
+            <strong>Emails:</strong> {submittedData.emails.join(", ")}
+          </p>
         </div>
       )}
 
       {showConfirmation && (
-        <motion.div 
+        <motion.div
           className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
@@ -195,9 +206,11 @@ const CalendarDemo = () => {
         >
           <motion.div className="bg-white p-6 rounded shadow-md w-full max-w-md">
             <h3 className="font-semibold">🎉 Congratulations!</h3>
-            <p>Meeting confirmation sent to: {submittedData?.emails.join(", ")}</p>
-            <button 
-              onClick={handleCloseConfirmation} 
+            <p>
+              Meeting confirmation sent to: {submittedData?.emails.join(", ")}
+            </p>
+            <button
+              onClick={handleCloseConfirmation}
               className="mt-4 px-4 py-2 bg-[#344966] text-white rounded"
             >
               OK
