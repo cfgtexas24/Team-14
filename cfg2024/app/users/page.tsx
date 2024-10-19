@@ -1,5 +1,6 @@
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { createClient } from "@/utils/supabase/server";
+import Link from "next/link";
 
 type User = {
   id: string;  // Added id field
@@ -35,12 +36,16 @@ export default async function UserList() {  // Changed function name to PascalCa
   return (
       <div className="flex flex-col items-center space-y-4">
         {users.map((user) => (
-          <Card key={user.id} className='box-border w-1/2'>
-              <CardHeader>
-                  <CardTitle>{user.first_name} {user.last_name}</CardTitle>
-                  <CardDescription>{user.email} - {user.role}</CardDescription>
-              </CardHeader>
-          </Card>
+          <Link href={`/users/${user.id}`} key={user.id} className="w-full">
+            <div className="flex justify-center">
+              <Card key={user.id} className='box-border w-1/2 cursor-pointer hover:shadow-lg transition-shadow duration-200'>
+                  <CardHeader>
+                      <CardTitle>{user.first_name} {user.last_name}</CardTitle>
+                      <CardDescription>{user.email} - {user.role}</CardDescription>
+                  </CardHeader>
+              </Card>
+            </div>
+          </Link>
         ))}
       </div>
   );
