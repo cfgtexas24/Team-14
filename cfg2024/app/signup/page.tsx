@@ -14,12 +14,26 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const Signup1: React.FC = () => {
   const [role, setRole] = useState<'candidate' | 'employer' | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
-  const handleRoleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRole(event.target.value as 'candidate' | 'employer');
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError(null);
+
+    const formData = new FormData(event.currentTarget);
+    const result = await signup(formData);
+
+    if (result.success) {
+      // Redirect based on role
+      router.push(role === 'candidate' ? '/profile' : '/');
+    } else {
+      setError(result.error || "An unknown error occurred");
+    }
   };
 
   return (
@@ -35,7 +49,8 @@ const Signup1: React.FC = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form>
+              <form onSubmit={handleSubmit}>
+                {error && <div className="text-red-500 mb-4">{error}</div>}
                 <div className="grid gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="email">Email</Label>
@@ -66,6 +81,7 @@ const Signup1: React.FC = () => {
                           value="candidate"
                           checked={role === 'candidate'}
                           onChange={(e) => setRole(e.target.value as 'candidate')}
+                          required
                         />
                         Candidate
                       </label>
@@ -76,12 +92,13 @@ const Signup1: React.FC = () => {
                           value="employer"
                           checked={role === 'employer'}
                           onChange={(e) => setRole(e.target.value as 'employer')}
+                          required
                         />
                         Employer
                       </label>
                     </div>
                   </div>
-                  <Button type="submit" className="w-full" formAction={signup}>
+                  <Button type="submit" className="w-full">
                     Sign up
                   </Button>
                 </div>

@@ -61,6 +61,13 @@ export function MainNavLinks() {
           </motion.div>
         </NavigationMenuItem>
         <NavigationMenuItem>
+          <Link href="/users" legacyBehavior passHref>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              Users
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
           <motion.div whileHover={{ scale: 1.2 }}>
             <Link href="/login" legacyBehavior passHref>
               <NavigationMenuLink

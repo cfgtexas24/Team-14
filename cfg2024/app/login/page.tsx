@@ -70,6 +70,13 @@ const Login1 = () => {
                     Log in
                   </Button>
                 </div>
+<<<<<<< HEAD
+=======
+                <Button formAction={login} type="submit" className="w-full">
+                  Log in
+                </Button>
+              </div>
+>>>>>>> a626e035b4ca916b55abee3a353aad913917f82e
               </form>
             </CardContent>
           </Card>
