@@ -17,12 +17,8 @@ import Link from "next/link";
 const Login1 = () => {
   return (
     <section className="flex items-center justify-center min-h-screen py-32">
-      
-
-
       <div className="container">
         <div className="flex flex-col gap-4">
-          
           <Card className="mx-auto w-full max-w-md">
             <CardHeader className="items-center">
               <UserRound className="size-10 rounded-full bg-accent p-2.5 text-muted-foreground" />
@@ -58,7 +54,6 @@ const Login1 = () => {
                     required
                   />
                 </div>
-                
                 <Button formAction={login} type="submit" className="w-full">
                   Log in
                 </Button>
