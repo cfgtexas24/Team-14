@@ -10,18 +10,17 @@ import {
 import { CircleArrowRight, Files, Settings } from "lucide-react";
 import { Tilt } from "react-tilt";
 import Image from "next/image";
-import socioeconomic from "@/assets/socioeconomic.jpg";
 import Link from "next/link";
 import Match from "@/assets/match.png";
 import Friends from "@/assets/friends.png";
 
 const defaultOptions = {
-  reverse: false,
-  max: 35,
-  perspective: 1000,
+  reverse: true,
+  max: 5,
+  perspective: 500,
   scale: 1.1,
-  speed: 1000,
-  transition: true,
+  speed: 900,
+  transition: false,
   axis: null,
   reset: true,
   easing: "cubic-bezier(.03,.98,.52,.99)",
