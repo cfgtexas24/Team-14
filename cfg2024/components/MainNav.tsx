@@ -12,8 +12,8 @@ const MainNav = () => {
           <Image
             src={Logo}
             alt="Logo"
-            width={200}
-            height={200}
+            width={175}
+            height={175}
             className="hover:cursor-pointer"
           />
         </Link>

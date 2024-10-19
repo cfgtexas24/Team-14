@@ -12,6 +12,8 @@ import { Tilt } from "react-tilt";
 import Image from "next/image";
 import socioeconomic from "@/assets/socioeconomic.jpg";
 import Link from "next/link";
+import Match from "@/assets/match.png";
+import Friends from "@/assets/friends.png";
 
 const defaultOptions = {
   reverse: false,
@@ -34,10 +36,9 @@ const About1 = () => {
             Connect, Support, and Grow Together
           </h1>
           <p className="max-w-xl text-lg">
-          Our community thrives on shared experiences. 
-          Engage directly with alumni and mentors who have overcome 
-          similar barriers through our messaging or join our 
-          discussion board to share ideas and support.
+            Our community thrives on shared experiences. Engage directly with
+            alumni and mentors who have overcome similar barriers through our
+            messaging or join our discussion board to share ideas and support.
           </p>
         </div>
         <div className="grid gap-2 grid-cols-2">
@@ -45,15 +46,17 @@ const About1 = () => {
             <div className="flex items-center justify-center">
               <Card className="w-96">
                 <CardHeader className="flex flex-col items-center">
-                  <CardTitle className="text-2xl">Socioeconomic</CardTitle>
+                  <CardTitle className="text-2xl">
+                    Connect With Alumni
+                  </CardTitle>
                   <CardDescription className="text-center">
-                    Low-income/Underprivileged: Individuals or families with
-                    limited financial resources and access to basic needs.
+                    Connect with Alumni Share experiences with alumni who have
+                    overcome challenges and achieved success.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="flex items-center justify-center">
                   <Image
-                    src={socioeconomic}
+                    src={Match}
                     alt="eco"
                     width={250}
                     height={250}
@@ -73,15 +76,18 @@ const About1 = () => {
               <div className="flex items-center justify-center">
                 <Card className="w-96">
                   <CardHeader className="flex flex-col items-center">
-                    <CardTitle className="text-2xl">Socioeconomic</CardTitle>
+                    <CardTitle className="text-2xl">
+                      Peer Support Groups
+                    </CardTitle>
                     <CardDescription className="text-center">
-                      Low-income/Underprivileged: Individuals or families with
-                      limited financial resources and access to basic needs.
+                      Peer Support Groups: Connect with individuals who share
+                      similar experiences and challenges. Support, encourage and
+                      learn from each other.
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="flex items-center justify-center">
                     <Image
-                      src={socioeconomic}
+                      src={Friends}
                       alt="eco"
                       width={250}
                       height={250}
@@ -104,13 +110,13 @@ const About1 = () => {
               Empowering Individuals to Rebuild Careers
             </h2>
             <p className="text-muted-foreground">
-              We aim to help empower individuals with barriers to
-              re-enter the workforce with confidence. Our platform 
-              is designed to provide essential resources and opportunities 
-              for long-term career success.
+              We aim to help empower individuals with barriers to re-enter the
+              workforce with confidence. Our platform is designed to provide
+              essential resources and opportunities for long-term career
+              success.
             </p>
           </div>
-          <div className="grid gap-10 md:grid-cols-3">
+          <div className="grid gap-10 md:grid-cols-3 pb-20">
             <div className="flex flex-col">
               <div className="mb-5 flex size-12 items-center justify-center rounded-2xl bg-accent">
                 <Files className="size-5" />
@@ -119,10 +125,10 @@ const About1 = () => {
                 Radically Inclusive Support
               </h3>
               <p className="text-muted-foreground">
-                We believe there’s no room for judgement or exclusion. 
-                We are here to lift each other up, providing feedback, 
-                resources, and community to ensure that every individual 
-                has access to opportunities, regardless of their background.
+                We believe there’s no room for judgement or exclusion. We are
+                here to lift each other up, providing feedback, resources, and
+                community to ensure that every individual has access to
+                opportunities, regardless of their background.
               </p>
             </div>
             <div className="flex flex-col">
@@ -133,10 +139,10 @@ const About1 = () => {
                 Making Meaningful Progress
               </h3>
               <p className="text-muted-foreground">
-                We focus on bold initiatives that create tangible career outcomes. 
-                By prioritizing what matters most, we work with our community to 
-                ensure that job placements and personal growth are always moving forward, 
-                step by step.
+                We focus on bold initiatives that create tangible career
+                outcomes. By prioritizing what matters most, we work with our
+                community to ensure that job placements and personal growth are
+                always moving forward, step by step.
               </p>
             </div>
             <div className="flex flex-col">
@@ -147,10 +153,10 @@ const About1 = () => {
                 Empowering Through Knowledge
               </h3>
               <p className="text-muted-foreground">
-                We believe that knowledge and opportunity are keys to empowerment. 
-                Through accessible resources, career coaching, and mentorship, our 
-                platform helps individuals take control of their career paths and 
-                confidently pursue meaningful work.
+                We believe that knowledge and opportunity are keys to
+                empowerment. Through accessible resources, career coaching, and
+                mentorship, our platform helps individuals take control of their
+                career paths and confidently pursue meaningful work.
               </p>
             </div>
           </div>
