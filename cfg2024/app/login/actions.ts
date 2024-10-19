@@ -34,15 +34,24 @@ export async function signup(formData: FormData) {
   const data = {
     email: formData.get("email") as string,
     password: formData.get("password") as string,
+    role: formData.get("role") as string,
   };
-
+  console.log(data);
   const { error } = await supabase.auth.signUp(data);
 
   if (error) {
+<<<<<<< HEAD
     console.log(error);
+=======
+    console.log(error)
+>>>>>>> e61d9d61a6d2dd301dfdff44f05592feea96aa7d
     redirect("/error");
   }
 
   revalidatePath("/", "layout");
-  redirect("/");
+  if (data.role == 'candidate') {
+    redirect("/profile");
+  } else {
+    redirect("/");
+  }
 }
