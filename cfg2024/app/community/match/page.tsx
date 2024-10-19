@@ -69,9 +69,9 @@ const CardWithForm = () => {
     <div className="relative w-full flex flex-col justify-start items-center">
       {/* Description Section */}
       <div className="text-center mt-8 mb-8">
-        <h1 className="text-4xl font-bold">Bringing the power of matching to everyone</h1>
+        <h1 className="text-4xl font-bold">Empowering connections for everyone</h1>
         <p className="text-xl mt-4 text-gray-600">
-          Our platform connects individuals through shared interests and common goals. Start matching now to find someone who shares your passions!
+        Discover meaningful connections with people who share your passions and goals. Start matching today and find individuals who align with your interests!
         </p>
       </div>
 
