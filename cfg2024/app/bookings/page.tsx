@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { Calendar } from "@/components/ui/calendar";
-import { motion } from "framer-motion"; // Import framer-motion for animations
+import { motion } from "framer-motion";
 
 const meetingTypeMap: { [key: string]: string } = {
   mock: "Mock - Interview",
@@ -18,12 +18,13 @@ const CalendarDemo = () => {
   const [email, setEmail] = React.useState<string>("");
   const [error, setError] = React.useState<string>("");
   const [showConfirmation, setShowConfirmation] = React.useState<boolean>(false);
+  const [time, setTime] = React.useState<string>("09:00");
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    setError(""); // Reset error message
+    setError("");
 
-    // Validation
+    // Input Validation
     if (!meetingType || !date || !email) {
       setError("Please fill in all fields.");
       return;
@@ -43,6 +44,7 @@ const CalendarDemo = () => {
     const data = {
       meetingType: meetingTypeMap[meetingType] || meetingType,
       date: formattedDate,
+      time: time,
       duration: `${duration} mins`,
       emails: emailList,
     };
@@ -133,6 +135,35 @@ const CalendarDemo = () => {
           />
         </div>
 
+        <div className="mb-4">
+          <label htmlFor="time" className="block mb-2 font-semibold">
+            Meeting Time
+          </label>
+          <select
+            id="time"
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+            className="border rounded-md p-2 h-12 w-full"
+          >
+            {Array.from({ length: 24 }).map((_, index) => {
+              const hour = index < 10 ? `0${index}` : index;
+              return (
+                <option key={index} value={`${hour}:00`}>
+                  {hour}:00
+                </option>
+              );
+            })}
+            {Array.from({ length: 24 }).map((_, index) => {
+              const hour = index < 10 ? `0${index}` : index;
+              return (
+                <option key={index + 24} value={`${hour}:30`}>
+                  {hour}:30
+                </option>
+              );
+            })}
+          </select>
+        </div>
+
         {error && <p className="text-red-500">{error}</p>}
         
         <button 
@@ -148,6 +179,7 @@ const CalendarDemo = () => {
           <h3 className="font-semibold">Meeting Information</h3>
           <p><strong>Meeting Type:</strong> {submittedData.meetingType}</p>
           <p><strong>Selected Date:</strong> {submittedData.date}</p>
+          <p><strong>Selected Time:</strong> {submittedData.time}</p>
           <p><strong>Duration:</strong> {submittedData.duration}</p>
           <p><strong>Emails:</strong> {submittedData.emails.join(", ")}</p>
         </div>
