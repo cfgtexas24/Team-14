@@ -24,7 +24,7 @@ export default function JobPostingForm(): JSX.Element {
       const result = await submitJobPosting(data);
       if (result.success) {
         alert('Job posted successfully!');
-        // Reset form or redirect user
+
       } else {
         setSubmitError(result.error || 'An error occurred while submitting the job posting.');
       }
