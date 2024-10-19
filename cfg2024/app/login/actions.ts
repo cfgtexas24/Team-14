@@ -29,7 +29,6 @@ export async function login(formData: FormData) {
   redirect("/");
 }
 
-
 export async function signup(formData: FormData): Promise<SignupResult> {
   const supabase = createClient();
 
@@ -45,16 +44,21 @@ export async function signup(formData: FormData): Promise<SignupResult> {
   }
 
   if (data.password.length < 6) {
-    return { success: false, error: "Password must be at least 6 characters long." };
+    return {
+      success: false,
+      error: "Password must be at least 6 characters long.",
+    };
   }
 
-  if (!['candidate', 'employer'].includes(data.role)) {
+  if (!["candidate", "employer"].includes(data.role)) {
     return { success: false, error: "Invalid role selected." };
   }
 
   try {
     // Sign up the user
-    const { data: authData, error: signUpError } = await supabase.auth.signUp(data);
+    const { data: authData, error: signUpError } = await supabase.auth.signUp(
+      data
+    );
 
     if (signUpError) {
       console.log(signUpError);
@@ -64,7 +68,7 @@ export async function signup(formData: FormData): Promise<SignupResult> {
     if (authData.user) {
       // Insert the user data into your custom users table
       const { error: insertError } = await supabase
-        .from('custom_users')
+        .from("custom_users")
         .insert({
           id: authData.user.id,
           email: data.email,
@@ -73,7 +77,10 @@ export async function signup(formData: FormData): Promise<SignupResult> {
 
       if (insertError) {
         console.log("Error inserting into custom_users table:", insertError);
-        return { success: false, error: "An error occurred while creating your profile." };
+        return {
+          success: false,
+          error: "An error occurred while creating your profile.",
+        };
       }
     }
 
@@ -81,6 +88,15 @@ export async function signup(formData: FormData): Promise<SignupResult> {
     return { success: true, role: data.role };
   } catch (error) {
     console.error("Unexpected error during signup:", error);
-    return { success: false, error: "An unexpected error occurred. Please try again." };
+    return {
+      success: false,
+      error: "An unexpected error occurred. Please try again.",
+    };
   }
+}
+
+export async function signOut() {
+  const supabase = createClient();
+  await supabase.auth.signOut();
+  redirect("/login");
 }

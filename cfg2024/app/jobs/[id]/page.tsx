@@ -76,6 +76,5 @@ export default async function Page({ params }: { params: PageParams }) {
             </Card>
           ))}
         </div>
-
     );
 }
