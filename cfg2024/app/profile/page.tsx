@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { fetchUserData, uploadResume, saveUserProfile } from "./actions";
 
 interface FormData {
   firstName: string;
   lastName: string;
-  email: string;
   phone: string;
   address?: string;
   gender?: string;
@@ -23,7 +23,6 @@ export default function Profile() {
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
-    email: "",
     phone: "",
     address: "",
     gender: "",
@@ -35,6 +34,28 @@ export default function Profile() {
   });
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [message, setMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function loadUserData() {
+      const userData = await fetchUserData();
+      if (userData) {
+        setFormData(prevData => ({
+          ...prevData,
+          firstName: userData.first_name || '',
+          lastName: userData.last_name || '',
+          phone: userData.phone || '',
+          address: userData.address || '',
+          gender: userData.gender || '',
+          disability: userData.disability || '',
+          workAuth: userData.work_auth || '',
+          linkedin: userData.linkedin || '',
+          roles: userData.roles || '',
+        }));
+      }
+    }
+    loadUserData();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -50,22 +71,30 @@ export default function Profile() {
     const newErrors: { [key: string]: string } = {};
     if (!formData.firstName) newErrors.firstName = "First name is required.";
     if (!formData.lastName) newErrors.lastName = "Last name is required.";
-    if (!formData.email) newErrors.email = "Email is required.";
     if (!formData.phone) newErrors.phone = "Phone number is required.";
     return newErrors;
   };
 
-  const saveChanges = () => {
+  const saveChanges = async () => {
     const formErrors = validateForm();
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
       return;
     }
 
-    // Handle saving the data (e.g., send to API)
-    console.log("Data saved:", formData);
-    // Clear errors if saving is successful
-    setErrors({});
+    let resumeUrl = null;
+    if (formData.resume) {
+      resumeUrl = await uploadResume(formData.firstName, formData.resume);
+    }
+
+    const success = await saveUserProfile(formData.firstName, formData, resumeUrl);
+
+    if (success) {
+      setMessage("Profile updated successfully!");
+      setErrors({});
+    } else {
+      setMessage("Error updating profile. Please try again.");
+    }
   };
 
   return (
@@ -74,6 +103,7 @@ export default function Profile() {
         <header className="space-y-1.5">
           <h2 className="text-lg font-semibold">Personal Information</h2>
         </header>
+        {message && <div className={message.includes("Error") ? "text-red-500" : "text-green-500"}>{message}</div>}
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
@@ -101,20 +131,6 @@ export default function Profile() {
                 onChange={handleChange}
               />
               {errors.lastName && <p className="text-red-500">{errors.lastName}</p>}
-            </div>
-            <div>
-              <Label htmlFor="email">
-                Email <span className="text-red-500">*</span>
-              </Label>
-              <Input
-                id="email"
-                name="email"
-                placeholder="Enter your email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-              />
-              {errors.email && <p className="text-red-500">{errors.email}</p>}
             </div>
             <div>
               <Label htmlFor="phone">
