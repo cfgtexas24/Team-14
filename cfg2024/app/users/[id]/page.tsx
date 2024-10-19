@@ -22,6 +22,7 @@ type User = {
   disability?: string;
   work_auth?: string;
   linkedin?: string;
+  resume_url?: string;
 };
 
 async function getUser(id: number) {
@@ -29,7 +30,7 @@ async function getUser(id: number) {
   
     const { data, error } = await supabase
       .from("custom_users")
-      .select("id, first_name, last_name, email, role, address, gender, disability, work_auth, linkedin")
+      .select("id, first_name, last_name, email, role, address, gender, disability, work_auth, linkedin, resume_url")
       .eq("id", id)
       .single();
   
@@ -53,6 +54,9 @@ export default async function Page({ params }: { params: PageParams }) {
     if (!success || !user) {
         return <div>Error loading User</div>;
     }
+
+    const isPDF = user.resume_url?.toLowerCase().endsWith('.pdf');
+
     return (
       <div className="flex flex-col items-center space-y-4">
           <Card className='box-border h-full w-full max-w-2xl'>
@@ -66,6 +70,26 @@ export default async function Page({ params }: { params: PageParams }) {
                   {user.gender && <p>Gender: {user.gender}</p>}
                   {user.disability && <p>Disability: {user.disability}</p>}
                   {user.work_auth && <p>Work Authorization: {user.work_auth}</p>}
+
+                  {user.resume_url && (
+                    <div className="mt-4">
+                      <h3 className="text-2xl font-semibold mb-2">Resume</h3>
+                      {isPDF ? (
+                        <iframe 
+                          src={`${user.resume_url}#view=FitH`} 
+                          width="100%" 
+                          height="500px" 
+                          style={{border: "1px solid #ddd"}}
+                        >
+                          This browser does not support PDFs. Please download the PDF to view it.
+                        </iframe>
+                      ) : (
+                        <a href={user.resume_url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                          Download Resume
+                        </a>
+                      )}
+                    </div>
+                  )}
               </CardContent>
               <CardFooter>
                   {user.linkedin && (
