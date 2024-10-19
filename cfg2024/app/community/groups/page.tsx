@@ -1,8 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { Session, Chatbox } from "@talkjs/react";
+import Talk from "talkjs";
+import { useCallback } from "react";
 import { Tilt } from "react-tilt";
-import TinderCard from "react-tinder-card"; // Import react-tinder-card
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -10,109 +13,208 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { createLike, fetchAllUsers } from "./actions"; // Import necessary functions
+import Image from "next/image";
+import culture from "@/assets/culture.webp";
+import education from "@/assets/education.png";
+import employment from "@/assets/employment.jpg";
+import family from "@/assets/family.jpg";
+import geographical from "@/assets/geographical.png";
+import socioeconomic from "@/assets/socioeconomic.jpg";
 
-const defaultOptions = {
-  reverse: false,
-  max: 35,
-  perspective: 1000,
-  scale: 1.1,
-  speed: 1000,
-  transition: true,
-  axis: null,
-  reset: true,
-  easing: "cubic-bezier(.03,.98,.52,.99)",
-};
+const Match = () => {
+  const syncUser = useCallback(
+    () =>
+      new Talk.User({
+        id: "nina",
+        name: "Nina",
+        email: "nina@example.com",
+        photoUrl: "https://talkjs.com/new-web/avatar-7.jpg",
+        welcomeMessage: "Hi!",
+      }),
+    []
+  );
 
-const CardWithForm = () => {
-  const [users, setUsers] = useState([]); // State to store all users
-  const [swiped, setSwiped] = useState({}); // Track swiped state for each user
-  const [error, setError] = useState(""); // State for error messages
-  const currentUserId = "currentUserId"; // Replace with actual current user ID
-
-  useEffect(() => {
-    // Fetch all users on component mount
-    const fetchUsers = async () => {
-      try {
-        const data = await fetchAllUsers(); // Fetch all users
-        setUsers(data); // Set the users data to state
-      } catch (error) {
-        console.error("Error fetching users:", error);
-        setError("Failed to fetch users.");
-      }
-    };
-
-    fetchUsers();
-  }, []);
-
-  const handleSwipe = async (direction, likedId) => {
-    if (direction === "right") {
-      if (!currentUserId || !likedId) {
-        setError("Both liker_id and liked_id are required to create a like."); // Set error message
-        return; // Exit early if user IDs are not valid
-      }
-
-      try {
-        await createLike(currentUserId, likedId); // Create a like with liker_id and liked_id
-        setSwiped((prev) => ({ ...prev, [likedId]: true })); // Set swiped state for the liked user
-        setError(""); // Clear any previous error messages
-      } catch (error) {
-        console.error("Error creating like:", error);
-        setError("Failed to create like."); // Set error message for failed operation
-      }
-    }
+  const defaultOptions = {
+    reverse: false, // reverse the tilt direction
+    max: 35, // max tilt rotation (degrees)
+    perspective: 1000, // Transform perspective, the lower the more extreme the tilt gets.
+    scale: 1.1, // 2 = 200%, 1.5 = 150%, etc..
+    speed: 1000, // Speed of the enter/exit transition
+    transition: true, // Set a transition on enter/exit.
+    axis: null, // What axis should be disabled. Can be X or Y.
+    reset: true, // If the tilt effect has to be reset on exit.
+    easing: "cubic-bezier(.03,.98,.52,.99)", // Easing on enter/exit.
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      {users.length > 0 ? (
-        users.map((user) => (
-          !swiped[user.id] && (
-            <TinderCard
-              key={user.id}
-              onSwipe={(dir) => handleSwipe(dir, user.id)} // Pass likedId to handleSwipe
-              preventSwipe={["up", "down"]} // Prevent vertical swipes
-            >
-              <Tilt options={defaultOptions} style={{ height: 400, width: 350 }}>
-                <Card className="w-full">
-                  <CardHeader>
-                    <CardTitle>{user.firstName} {user.lastName}</CardTitle>
-                    <CardDescription>{user.rolesInterested.join(", ")}</CardDescription> {/* Assuming rolesInterested is an array */}
-                  </CardHeader>
-                  <div className="w-full h-40">
-                    <img
-                      src="https://via.placeholder.com/350x150"
-                      alt="Profile"
-                      className="w-full h-full object-cover rounded-t"
-                    />
-                  </div>
-                  <CardContent>
-                    <div className="grid w-full items-center gap-4">
-                      <div className="flex flex-col space-y-1.5">
-                        <label htmlFor="funFact">Fun Fact:</label>
-                        <div id="funFact" className="p-2">
-                          I love to...
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Tilt>
-            </TinderCard>
-          )
-        ))
-      ) : (
-        <div>No users found</div>
-      )}
-      
-      {/* Display Error Message */}
-      {error && (
-        <div className="text-red-500 text-center mt-4">
-          {error}
-        </div>
-      )}
+    <div>
+      <div className="mt-12 flex flex-wrap items-center justify-center gap-12 max-w-7xl mx-auto">
+        <Tilt options={defaultOptions}>
+          <div className="flex items-center justify-center">
+            <Card className="w-96">
+              <CardHeader className="flex flex-col items-center">
+                <CardTitle className="text-2xl">Socioeconomic</CardTitle>
+                <CardDescription className="text-center">
+                  Low-income/Underprivileged: Individuals or families with
+                  limited financial resources and access to basic needs.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex items-center justify-center">
+                <Image
+                  src={socioeconomic}
+                  alt="eco"
+                  width={250}
+                  height={250}
+                  className="rounded-lg"
+                />
+              </CardContent>
+              <CardContent className="flex flex-col items-center">
+                <Button>Join</Button>
+              </CardContent>
+            </Card>
+          </div>
+        </Tilt>
+        <Tilt options={defaultOptions}>
+          <div className="flex items-center justify-center">
+            <Card className="w-96">
+              <CardHeader className="flex flex-col items-center">
+                <CardTitle className="text-2xl">Educational</CardTitle>
+                <CardDescription className="text-center">
+                  Limited Formal Education: Individuals who did not have the
+                  opportunity to complete high school or basic education.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex items-center justify-center">
+                <Image
+                  src={education}
+                  alt="eco"
+                  width={250}
+                  height={250}
+                  className="rounded-lg"
+                />
+              </CardContent>
+              <CardContent className="flex flex-col items-center">
+                <Button>Join</Button>
+              </CardContent>
+            </Card>
+          </div>
+        </Tilt>
+        <Tilt options={defaultOptions}>
+          <div className="flex items-center justify-center">
+            <Card className="w-96">
+              <CardHeader className="flex flex-col items-center">
+                <CardTitle className="text-2xl">Employment</CardTitle>
+                <CardDescription className="text-center">
+                  Unemployed: Individuals without a job who are actively seeking
+                  work or facing employment barriers.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex items-center justify-center">
+                <Image
+                  src={employment}
+                  alt="eco"
+                  width={250}
+                  height={250}
+                  className="rounded-lg"
+                />
+              </CardContent>
+              <CardContent className="flex flex-col items-center">
+                <Button>Join</Button>
+              </CardContent>
+            </Card>
+          </div>
+        </Tilt>
+        <Tilt options={defaultOptions}>
+          <div className="flex items-center justify-center">
+            <Card className="w-96">
+              <CardHeader className="flex flex-col items-center">
+                <CardTitle className="text-2xl">Family</CardTitle>
+                <CardDescription className="text-center">
+                  Single-parent Household: Individuals raised by one parent,
+                  which may affect financial and emotional support.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex items-center justify-center">
+                <Image
+                  src={family}
+                  alt="eco"
+                  width={250}
+                  height={250}
+                  className="rounded-lg"
+                />
+              </CardContent>
+              <CardContent className="flex flex-col items-center">
+                <Button>Join</Button>
+              </CardContent>
+            </Card>
+          </div>
+        </Tilt>
+        <Tilt options={defaultOptions}>
+          <div className="flex items-center justify-center">
+            <Card className="w-96">
+              <CardHeader className="flex flex-col items-center">
+                <CardTitle className="text-2xl">Cultural and Ethnic</CardTitle>
+                <CardDescription className="text-center">
+                  Minority Ethnic Group: Individuals from racial or ethnic
+                  groups that are underrepresented or face systemic barriers in
+                  the community.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex items-center justify-center">
+                <Image
+                  src={culture}
+                  alt="eco"
+                  width={250}
+                  height={250}
+                  className="rounded-lg"
+                />
+              </CardContent>
+              <CardContent className="flex flex-col items-center">
+                <Button>Join</Button>
+              </CardContent>
+            </Card>
+          </div>
+        </Tilt>
+        <Tilt options={defaultOptions}>
+          <div className="flex items-center justify-center">
+            <Card className="w-96">
+              <CardHeader className="flex flex-col items-center">
+                <CardTitle className="text-2xl">Geographical</CardTitle>
+                <CardDescription className="text-center">
+                  Disadvantaged Neighborhood: Individuals from areas with high
+                  crime rates, limited job opportunities, and poor access to
+                  educational and recreational activities.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex items-center justify-center">
+                <Image
+                  src={geographical}
+                  alt="eco"
+                  width={250}
+                  height={250}
+                  className="rounded-lg"
+                />
+              </CardContent>
+              <CardContent className="flex flex-col items-center">
+                <Button>Join</Button>
+              </CardContent>
+            </Card>
+          </div>
+        </Tilt>
+      </div>
+
+      <Session
+        appId="t3Z7QMmB"
+        userId="sample_user_sebastian"
+        syncUser={syncUser}
+      >
+        <Chatbox
+          conversationId="sample_group_chat"
+          style={{ width: "100%", height: "500px" }}
+        ></Chatbox>
+      </Session>
     </div>
   );
 };
 
-export default CardWithForm;
+export default Match;
