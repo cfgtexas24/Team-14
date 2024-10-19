@@ -45,7 +45,7 @@ export default async function Page({ params }: { params: PageParams }) {
                         <p>Do you want to apply for this job?</p>
                     </CardContent>
                     <div className="flex justify-center space-x-4">
-                        <a href="/jobs" className="px-8 py-6 text-2xl">
+                        <a href="/jobs/success" className="px-8 py-6 text-2xl">
                             <Button className="px-8 py-6 text-2xl">Yes</Button>
                         </a>
                         <a href="/jobs" className="px-8 py-6 text-2xl">
