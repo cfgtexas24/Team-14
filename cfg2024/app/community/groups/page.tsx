@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
 import { Tilt } from "react-tilt";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,14 +16,13 @@ import employment from "@/assets/employment.jpg";
 import family from "@/assets/family.jpg";
 import geographical from "@/assets/geographical.png";
 import socioeconomic from "@/assets/socioeconomic.jpg";
-import { getCurrentUser } from "./[conversationID]/action";
-import { User } from "@supabase/supabase-js";
-import Chat from "./[conversationID]/Chat";
+
+import Link from "next/link";
 
 const defaultOptions = {
   reverse: false,
-  max: 35,
-  perspective: 1000,
+  max: 5,
+  perspective: 500,
   scale: 1.1,
   speed: 1000,
   transition: true,
@@ -34,43 +32,8 @@ const defaultOptions = {
 };
 
 const Match = () => {
-  const [conversationID, setConversationID] = useState<string | null>(null);
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    console.log("conversationID changed:", conversationID); // Debugging
-
-    // Fetch the current user
-    async function fetchUser() {
-      try {
-        const { user } = await getCurrentUser();
-        setUser(user);
-      } catch (error) {
-        console.error("Error fetching user:", error);
-      }
-    }
-
-    fetchUser();
-  }, []);
-
-  const handleJoin = (id: string) => {
-    console.log("Join button clicked with id:", id); // Debugging
-
-    setConversationID(id);
-  };
-
-  const handleClick = async () => {
-    const { user, session } = await getCurrentUser();
-    console.log("User:", user?.id);
-    console.log("Session:", session?.user.id);
-  };
-  if (!user) {
-    return <div>Please log in to join a group chat.</div>;
-  }
-
   return (
     <div>
-      <Button onClick={handleClick}>FETCH USERS</Button>
       <div className="mt-12 flex flex-wrap items-center justify-center gap-12 max-w-7xl mx-auto">
         <Tilt options={defaultOptions}>
           <div className="flex items-center justify-center">
@@ -92,9 +55,9 @@ const Match = () => {
                 />
               </CardContent>
               <CardContent className="flex flex-col items-center">
-                <Button onClick={() => handleJoin("socioeconomic")}>
-                  Join
-                </Button>
+                <Link href={"/community/groups/1"}>
+                  <Button>Join</Button>
+                </Link>
               </CardContent>
             </Card>
           </div>
@@ -119,7 +82,9 @@ const Match = () => {
                 />
               </CardContent>
               <CardContent className="flex flex-col items-center">
-                <Button onClick={() => handleJoin("educational")}>Join</Button>
+                <Link href={"/community/groups/2"}>
+                  <Button>Join</Button>
+                </Link>
               </CardContent>
             </Card>
           </div>
@@ -144,7 +109,9 @@ const Match = () => {
                 />
               </CardContent>
               <CardContent className="flex flex-col items-center">
-                <Button onClick={() => handleJoin("employment")}>Join</Button>
+                <Link href={"/community/groups/3"}>
+                  <Button>Join</Button>
+                </Link>
               </CardContent>
             </Card>
           </div>
@@ -169,7 +136,9 @@ const Match = () => {
                 />
               </CardContent>
               <CardContent className="flex flex-col items-center">
-                <Button onClick={() => handleJoin("family")}>Join</Button>
+                <Link href={"/community/groups/4"}>
+                  <Button>Join</Button>
+                </Link>
               </CardContent>
             </Card>
           </div>
@@ -195,9 +164,9 @@ const Match = () => {
                 />
               </CardContent>
               <CardContent className="flex flex-col items-center">
-                <Button onClick={() => handleJoin("cultural_and_ethnic")}>
-                  Join
-                </Button>
+                <Link href={"/community/groups/5"}>
+                  <Button>Join</Button>
+                </Link>
               </CardContent>
             </Card>
           </div>
@@ -223,25 +192,14 @@ const Match = () => {
                 />
               </CardContent>
               <CardContent className="flex flex-col items-center">
-                <Button onClick={() => handleJoin("geographical")}>Join</Button>
+                <Link href={"/community/groups/6"}>
+                  <Button>Join</Button>
+                </Link>
               </CardContent>
             </Card>
           </div>
         </Tilt>
       </div>
-
-      {/* <Session
-        appId="t3Z7QMmB"
-        userId="sample_user_sebastian"
-        syncUser={syncUser}
-      >
-        <Chatbox
-          conversationId="sample_group_chat"
-          style={{ width: "100%", height: "500px" }}
-        ></Chatbox>
-      </Session> */}
-
-      {conversationID && <Chat conversationID={conversationID} />}
     </div>
   );
 };

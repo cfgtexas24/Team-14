@@ -3,6 +3,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
+import Talk from "talkjs";
 import { Session as TalkSession, Chatbox } from "@talkjs/react";
 import { getCurrentUser } from "./action"; // Adjust the path as necessary
 import { User } from "@supabase/supabase-js";
@@ -11,30 +12,33 @@ interface ChatProps {
   conversationID: string;
 }
 
-interface TalkUser {
-  id: string;
-  name: string;
-  email: string;
-  photoUrl: string;
-}
-
 export default function Chat({ conversationID }: ChatProps) {
   const [user, setUser] = useState<User | null>(null);
+  const [talkReady, setTalkReady] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
+
     async function fetchCurrentUser() {
       try {
         const { user } = await getCurrentUser();
-        // console.log("Fetched user:", user);
-        // console.log("Fetched userId:", user?.id);
-
-        setUser(user);
+        if (isMounted) {
+          setUser(user);
+          await Talk.ready; // Wait for TalkJS to be ready
+          setTalkReady(true);
+        }
       } catch (error) {
-        console.error("Error fetching current user:", error);
+        if (isMounted) {
+          console.error("Error fetching current user:", error);
+        }
       }
     }
 
     fetchCurrentUser();
+
+    return () => {
+      isMounted = false; // Cleanup: set isMounted to false if component unmounts
+    };
   }, []);
 
   const syncUser = useCallback(() => {
@@ -42,9 +46,9 @@ export default function Chat({ conversationID }: ChatProps) {
 
     return new Talk.User({
       id: user.id,
-      name: user.email.split("@")[0], // Get the username from email
+      name: user.email.split("@")[0],
       email: user.email,
-      photoUrl: "https://talkjs.com/new-web/avatar-1.jpg", // Customize as needed
+      photoUrl: "https://talkjs.com/new-web/avatar-1.jpg",
       welcomeMessage: "Hi there! Ready to chat?",
     });
   }, [user]);
@@ -54,23 +58,16 @@ export default function Chat({ conversationID }: ChatProps) {
       if (!user) return null;
 
       const conversation = session.getOrCreateConversation(conversationID);
-      conversation.setParticipant(session.me); // Add the current user as a participant
+      conversation.setParticipant(session.me);
 
-      // In a real application, you would add other participants programmatically here
-      // Example:
-      // const participant = new Talk.User({
-      //   id: 'some_other_user',
-      //   name: 'Other User',
-      //   email: 'other_user@example.com',
-      // });
-      // conversation.setParticipant(participant);
+      // In a real application, add other participants programmatically here if needed
 
       return conversation;
     },
     [user, conversationID]
   );
 
-  if (!user?.id) {
+  if (!user || !talkReady) {
     return <div>Loading...</div>;
   }
 
