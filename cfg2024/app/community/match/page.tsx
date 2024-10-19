@@ -66,50 +66,67 @@ const CardWithForm = () => {
   };
 
   return (
-    <div className="relative w-full h-screen flex justify-center items-center">
-      {loading ? (
-        <div>Loading...</div> // Show loading indicator while fetching data
-      ) : users.length > 0 ? (
-        users.map((user, index) => (
-          !swiped[user.id] && (
-            <TinderCard
-              key={user.id}
-              onSwipe={(dir) => handleSwipe(dir, user.id)} // Pass likedId to handleSwipe
-              preventSwipe={["up", "down"]} // Prevent vertical swipes
-              className="absolute" // This makes the cards stack
-              style={{ zIndex: users.length - index }} // Set z-index for stacking cards
-            >
-              <Tilt options={defaultOptions} style={{ height: 400, width: 350 }}>
-                <Card className="w-full">
-                  <CardHeader>
-                    <CardTitle>{user.email}</CardTitle> {/* Display user's email */}
-                    <CardDescription>{user.role}</CardDescription> {/* Display user's role */}
-                  </CardHeader>
-                  <div className="w-full h-40">
-                    <img
-                      src="https://via.placeholder.com/350x150" // You can replace this with a profile image if available
-                      alt="Profile"
-                      className="w-full h-full object-cover rounded-t"
-                    />
-                  </div>
-                  <CardContent>
-                    <div className="grid w-full items-center gap-4">
-                      <div className="flex flex-col space-y-1.5">
-                        <label htmlFor="funFact">Fun Fact:</label>
-                        <div id="funFact" className="p-2">
-                          I love to...
+    <div className="relative w-full flex flex-col justify-start items-center">
+      {/* Description Section */}
+      <div className="text-center mt-8 mb-8">
+        <h1 className="text-4xl font-bold">Bringing the power of matching to everyone</h1>
+        <p className="text-xl mt-4 text-gray-600">
+          Our platform connects individuals through shared interests and common goals. Start matching now to find someone who shares your passions!
+        </p>
+      </div>
+
+      {/* Container for Stacked Cards */}
+      <div className="relative w-full h-[500px] flex justify-center items-center">
+        {loading ? (
+          <div>Loading...</div> // Show loading indicator while fetching data
+        ) : users.length > 0 ? (
+          users.map((user, index) => (
+            !swiped[user.id] && (
+              <TinderCard
+                key={user.id}
+                onSwipe={(dir) => handleSwipe(dir, user.id)} // Pass likedId to handleSwipe
+                preventSwipe={["up", "down"]} // Prevent vertical swipes
+                className="absolute top-0" // Keeps the cards stacked on top of each other
+                style={{ zIndex: users.length - index }} // Set z-index for stacking cards
+              >
+                <Tilt options={defaultOptions} style={{ height: 400, width: 350 }}>
+                  <Card className="w-full">
+                    <CardHeader>
+                      {/* Email and Role remain the same */}
+                      <CardTitle className="text-2xl font-bold">{user.email}</CardTitle> {/* Display user's email */}
+                      <CardDescription className="text-lg text-gray-600">{user.role}</CardDescription> {/* Display user's role */}
+                    </CardHeader>
+                    
+                    <div className="w-full h-40">
+                      <img
+                        src="https://via.placeholder.com/350x150" // You can replace this with a profile image if available
+                        alt="Profile"
+                        className="w-full h-full object-cover rounded-t"
+                      />
+                    </div>
+                    
+                    <CardContent>
+                      <div className="grid w-full items-center gap-4">
+                        {/* Fun Fact Section with Simple Styling */}
+                        <div className="flex flex-col space-y-1.5">
+                          <label htmlFor="funFact" className="text-xl font-semibold text-black">
+                            Fun Fact:
+                          </label>
+                          <div id="funFact" className="text-lg font-medium text-black">
+                            {user.funFact || "I love to..."} {/* Example of dynamic fun fact */}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Tilt>
-            </TinderCard>
-          )
-        ))
-      ) : (
-        <div>No users found</div> // Show this only if loading is false and no users exist
-      )}
+                    </CardContent>
+                  </Card>
+                </Tilt>
+              </TinderCard>
+            )
+          ))
+        ) : (
+          <div>No users found</div> // Show this only if loading is false and no users exist
+        )}
+      </div>
 
       {error && (
         <div className="text-red-500 text-center mt-4">
