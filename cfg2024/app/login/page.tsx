@@ -1,22 +1,35 @@
+"use client";
+
 import { login } from "./actions";
 
-import { Globe, UserRound } from 'lucide-react';
+import { Globe, UserRound } from "lucide-react";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import Link from "next/link";
+import { useEffect } from "react";
 
 const Login1 = () => {
+  useEffect(() => {
+    // Scroll to the bottom or the desired section on page load
+    window.scrollTo({
+      top: document.body.scrollHeight, // Scroll to the bottom of the page
+      behavior: "smooth", // Enables smooth scrolling
+    });
+  }, []);
   return (
-    <section className="flex items-center justify-center min-h-screen py-32">
+    <section
+      className="flex items-center justify-center min-h-screen py-32 "
+      id="scroll-target"
+    >
       <div className="container">
         <div className="flex flex-col gap-4">
           <Card className="mx-auto w-full max-w-md">
@@ -27,37 +40,43 @@ const Login1 = () => {
             </CardHeader>
             <CardContent>
               <form>
-              <div className="grid gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="m@example.com"
-                    required
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <div className="flex justify-between">
-                    <Label htmlFor="password">Password</Label>
-                    {/* className="text-sm underline" */}
-                    <Link href="/forgotpassword" >
-                      Forgot password
-                    </Link>
+                <div className="grid gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      placeholder="m@example.com"
+                      required
+                    />
                   </div>
-                  <Input
-                    id="password"
-                    type="password"
-                    name="password"
-                    placeholder="Enter your password"
-                    required
-                  />
+                  <div className="grid gap-2">
+                    <div className="flex justify-between">
+                      <Label htmlFor="password">Password</Label>
+                      {/* className="text-sm underline" */}
+                      <Link href="/forgotpassword">Forgot password</Link>
+                    </div>
+                    <Input
+                      id="password"
+                      type="password"
+                      name="password"
+                      placeholder="Enter your password"
+                      required
+                    />
+                  </div>
+
+                  <Button formAction={login} type="submit" className="w-full">
+                    Log in
+                  </Button>
                 </div>
+<<<<<<< HEAD
+=======
                 <Button formAction={login} type="submit" className="w-full">
                   Log in
                 </Button>
               </div>
+>>>>>>> a626e035b4ca916b55abee3a353aad913917f82e
               </form>
             </CardContent>
           </Card>
@@ -66,20 +85,15 @@ const Login1 = () => {
             {/* <a href="#" className="underline">
               Sign up
             </a> */}
-                    <Link href="/signup" >
-                      Sign up
-                    </Link>
-            
+            <Link href="/signup">Sign up</Link>
           </div>
         </div>
       </div>
-      
     </section>
   );
 };
 
 export default Login1;
-
 
 // export default function LoginPage() {
 //   return (

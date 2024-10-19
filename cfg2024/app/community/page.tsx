@@ -31,12 +31,13 @@ const About1 = () => {
       <div className="container flex flex-col gap-12">
         <div className="flex flex-col gap-7">
           <h1 className=" font-semibold text-4xl">
-            Bringing the power of software to everyone
+            Connect, Support, and Grow Together
           </h1>
           <p className="max-w-xl text-lg">
-            Stacker makes it easy to build customer portals, CRMs, internal
-            tools, and other business applications for your team. In minutes,
-            not months.
+          Our community thrives on shared experiences. 
+          Engage directly with alumni and mentors who have overcome 
+          similar barriers through our messaging or join our 
+          discussion board to share ideas and support.
           </p>
         </div>
         <div className="grid gap-2 grid-cols-2">
@@ -100,11 +101,13 @@ const About1 = () => {
         <div className="flex flex-col gap-6 md:gap-20">
           <div className="max-w-xl">
             <h2 className="mb-2.5 text-3xl font-semibold md:text-5xl">
-              We make creating software ridiculously easy
+              Empowering Individuals to Rebuild Careers
             </h2>
             <p className="text-muted-foreground">
-              We aim to help empower 1,000,000 teams to create their own
-              software. Here is how we plan on doing it.
+              We aim to help empower individuals with barriers to
+              re-enter the workforce with confidence. Our platform 
+              is designed to provide essential resources and opportunities 
+              for long-term career success.
             </p>
           </div>
           <div className="grid gap-10 md:grid-cols-3">
@@ -113,12 +116,13 @@ const About1 = () => {
                 <Files className="size-5" />
               </div>
               <h3 className="mb-3 mt-2 text-lg font-semibold">
-                Being radically open
+                Radically Inclusive Support
               </h3>
               <p className="text-muted-foreground">
-                We believe there’s no room for big egos and there’s always time
-                to help each other. We strive to give and receive feedback,
-                ideas, perspectives
+                We believe there’s no room for judgement or exclusion. 
+                We are here to lift each other up, providing feedback, 
+                resources, and community to ensure that every individual 
+                has access to opportunities, regardless of their background.
               </p>
             </div>
             <div className="flex flex-col">
@@ -126,12 +130,13 @@ const About1 = () => {
                 <CircleArrowRight className="size-5" />
               </div>
               <h3 className="mb-3 mt-2 text-lg font-semibold">
-                Moving the needle
+                Making Meaningful Progress
               </h3>
               <p className="text-muted-foreground">
-                Boldly, bravely and with clear aims. We seek out the big
-                opportunities and double down on the most important things to
-                work on.
+                We focus on bold initiatives that create tangible career outcomes. 
+                By prioritizing what matters most, we work with our community to 
+                ensure that job placements and personal growth are always moving forward, 
+                step by step.
               </p>
             </div>
             <div className="flex flex-col">
@@ -139,35 +144,15 @@ const About1 = () => {
                 <Settings className="size-5" />
               </div>
               <h3 className="mb-3 mt-2 text-lg font-semibold">
-                Optimizing for empowerment
+                Empowering Through Knowledge
               </h3>
               <p className="text-muted-foreground">
-                We believe that everyone should be empowered to do whatever they
-                think is in the company&apos;s best interests.
+                We believe that knowledge and opportunity are keys to empowerment. 
+                Through accessible resources, career coaching, and mentorship, our 
+                platform helps individuals take control of their career paths and 
+                confidently pursue meaningful work.
               </p>
             </div>
-          </div>
-        </div>
-        <div className="grid gap-10 md:grid-cols-2">
-          <div>
-            <p className="mb-10 text-sm font-medium text-muted-foreground">
-              JOIN OUR TEAM
-            </p>
-            <h2 className="mb-2.5 text-3xl font-semibold md:text-5xl">
-              We&apos;re changing how software is made
-            </h2>
-          </div>
-          <div>
-            <img
-              src="https://www.shadcnblocks.com/images/block/placeholder.svg"
-              alt="placeholder"
-              className="mb-6 max-h-36 w-full rounded-xl object-cover"
-            />
-            <p className="text-muted-foreground">
-              And we&apos;re looking for the right people to help us do it. If
-              you&apos;re passionate about making change in the world, this
-              might be the place for you
-            </p>
           </div>
         </div>
       </div>
