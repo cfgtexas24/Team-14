@@ -37,6 +37,13 @@ export function MainNavLinks() {
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
+          <Link href="/users" legacyBehavior passHref>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              Users
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
           <Link href="/login" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Login
