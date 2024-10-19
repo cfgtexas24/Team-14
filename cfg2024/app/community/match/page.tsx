@@ -71,7 +71,7 @@ const CardWithForm = () => {
       <div className="text-center mt-8 mb-8">
         <h1 className="text-4xl font-bold">Empowering connections for everyone</h1>
         <p className="text-xl mt-4 text-gray-600">
-        Discover meaningful connections with people who share your passions and goals. Start matching today and find individuals who align with your interests!
+          Discover meaningful connections with people who share your passions and goals. Start matching today and find individuals who align with your interests!
         </p>
       </div>
 
@@ -99,7 +99,7 @@ const CardWithForm = () => {
                     
                     <div className="w-full h-40">
                       <img
-                        src="https://via.placeholder.com/350x150" // You can replace this with a profile image if available
+                        src={`https://picsum.photos/seed/${user.id}/350/150`} // Random image from Lorem Picsum
                         alt="Profile"
                         className="w-full h-full object-cover rounded-t"
                       />
