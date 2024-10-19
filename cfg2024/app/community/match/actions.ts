@@ -21,3 +21,17 @@ export async function createLike(likerId: string, likedId: string) {
 
   return data;
 }
+
+// Function to fetch all users 
+export async function fetchAllUsers() {
+  const { data, error } = await supabase
+    .from("users")
+    .select("id, firstName, lastName"); 
+
+  if (error) {
+    console.error("Error fetching users:", error);
+    throw new Error("Failed to fetch users.");
+  }
+
+  return data; // Return the fetched users
+}
