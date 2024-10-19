@@ -59,9 +59,11 @@ export default async function Page() {
                         </CardContent>
                         <CardFooter>
                         <CardDescription className="text-clip overflow-hidden">
+                            Salary: {"$"+job.salary.toLocaleString()}
+                            <br />
                             Skills: {job.skills}
                             <br />
-                            Qualification: {job.qualification}
+                            Qualification: {job.qualification.replace('_',' ')}
                         </CardDescription>
                         </CardFooter>
                     </Card>
