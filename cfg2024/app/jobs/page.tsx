@@ -8,6 +8,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { createClient } from '@/utils/supabase/server';
+import Link from "next/link";
 
 interface JobPostingData {
   id?: number;
@@ -45,24 +46,28 @@ export default async function Page() {
 
     return (
         <div className="flex flex-col items-center space-y-4">
-          {jobs.map((job: JobPostingData) => (
-            <Card key={job.id} className='box-border w-1/2'>
-                <CardHeader>
-                    <CardTitle>{job.title}</CardTitle>
-                    <CardDescription>{job.company}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <p>{job.description}</p>
-                </CardContent>
-                <CardFooter>
-                    <CardDescription className='text-clip overflow-hidden'>
-                          Skills: {job.skills} 
-                          <br></br>
-                          Qualification: {job.qualification}
-                    </CardDescription>
-                </CardFooter>
-            </Card>
-          ))}
-        </div>
+            {jobs.map((job: JobPostingData) => (
+                <Link href={`/jobs/${job.id}`} key={job.id} className="w-full">
+                    <div className="flex justify-center"> {/* This wrapper keeps it centered */}
+                    <Card className="box-border w-1/2 cursor-pointer hover:shadow-lg transition-shadow duration-200">
+                        <CardHeader>
+                        <CardTitle>{job.title}</CardTitle>
+                        <CardDescription>{job.company}</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                        <p>{job.description}</p>
+                        </CardContent>
+                        <CardFooter>
+                        <CardDescription className="text-clip overflow-hidden">
+                            Skills: {job.skills}
+                            <br />
+                            Qualification: {job.qualification}
+                        </CardDescription>
+                        </CardFooter>
+                    </Card>
+                    </div>
+                </Link>
+            ))}
+  </div>
     );
 }

@@ -68,7 +68,7 @@ export default async function Page({ params }: { params: PageParams }) {
                     </CardDescription>
                 </CardFooter>
                 <div className='flex justify-end'>
-                    <a href='https://rebirthempowermenteducation.org/' target='_blank'>
+                    <a href={`/jobs/${id}/apply`}>
                     <Button className='px-8 py-6 text-2xl'>Apply</Button>
                     </a>
                 </div>
