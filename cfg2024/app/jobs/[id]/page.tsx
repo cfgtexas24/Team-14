@@ -51,30 +51,39 @@ export default async function Page({ params }: { params: PageParams }) {
         return <div>Error loading jobs</div>;
     }
     return (
-        <div className="flex flex-col items-center space-y-4">
-          {job.map((job: JobPostingData) => (
-            <Card key={job.id} className='box-border h-full w-full'>
-                <CardHeader>
-                    <CardTitle className='text-5xl'>{job.title}</CardTitle>
-                    <CardDescription className='text-4xl'>{job.company}</CardDescription>
-                </CardHeader>
-                <CardContent className='text-3xl'>
-                    <p>{job.description}</p>
-                </CardContent>
-                <CardFooter>
-                    <CardDescription className='text-clip overflow-hidden text-xl'>
-                        Salary: {"$"+job.salary.toLocaleString()}<br />
-                        Skills: {Array.isArray(job.skills) ? job.skills.join(', ') : job.skills}<br></br>
-                        Qualification: {job.qualification.replace('_',' ')}
-                    </CardDescription>
-                </CardFooter>
-                <div className='flex justify-end'>
-                    <a href={`/jobs/${id}/apply`}>
-                    <Button className='px-8 py-6 text-2xl'>Apply</Button>
-                    </a>
-                </div>
-            </Card>
-          ))}
+        <div className='flex justify-center'>
+        {job.map((job: JobPostingData) => (
+        <Card key={job.id} className="w-[500px] flex flex-col items-center spact-y-4">
+      <CardHeader>
+        <CardTitle className='text-3xl'>{job.title}</CardTitle>
+        <CardDescription className='text-2xl'>{job.company}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form>
+          <div className="grid w-full items-center gap-4">
+          <p>{job.description}</p>
+            <div className="flex flex-col space-y-1.5">
+            </div>
+            <div className="flex flex-col space-y-1.5">
+            </div>
+          </div>
+        </form>
+      </CardContent>
+      <CardFooter className="flex justify-between">
+      <CardDescription className='text-clip overflow-hidden text-32'>
+            Salary: {"$"+job.salary.toLocaleString()}<br />
+            Skills: {Array.isArray(job.skills) ? job.skills.join(', ') : job.skills}<br></br>
+            Qualification: {job.qualification}
+      </CardDescription>
+      <div className='mt-20 pl-20'>
+      <a href={`/jobs/${id}/apply`}>
+        <Button>Apply</Button>
+        </a>
+      </div>
+      </CardFooter>
+    </Card>
+       ))}
         </div>
+
     );
 }
