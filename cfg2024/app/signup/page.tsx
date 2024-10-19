@@ -62,20 +62,20 @@ const Signup1: React.FC = () => {
                       <label>
                         <input
                           type="radio"
-                          name="candidate"
+                          name="role"
                           value="candidate"
                           checked={role === 'candidate'}
-                          onChange={handleRoleChange}
+                          onChange={(e) => setRole(e.target.value as 'candidate')}
                         />
                         Candidate
                       </label>
                       <label>
                         <input
                           type="radio"
-                          name="employer"
+                          name="role"
                           value="employer"
                           checked={role === 'employer'}
-                          onChange={handleRoleChange}
+                          onChange={(e) => setRole(e.target.value as 'employer')}
                         />
                         Employer
                       </label>

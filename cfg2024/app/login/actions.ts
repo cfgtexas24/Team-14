@@ -13,7 +13,6 @@ export async function login(formData: FormData) {
   const data = {
     email: formData.get("email") as string,
     password: formData.get("password") as string,
-    role: formData.get("role") as string,
   };
 
   const { error } = await supabase.auth.signInWithPassword(data);
@@ -23,11 +22,7 @@ export async function login(formData: FormData) {
   }
 
   revalidatePath("/", "layout");
-  if (data.role == 'Candidate') {
-    redirect("/profile");
-  } else {
-    redirect("/");
-  }
+  redirect("/");
 }
 
 export async function signup(formData: FormData) {
@@ -38,8 +33,9 @@ export async function signup(formData: FormData) {
   const data = {
     email: formData.get("email") as string,
     password: formData.get("password") as string,
+    role: formData.get("role") as string,
   };
-
+  console.log(data);
   const { error } = await supabase.auth.signUp(data);
 
   if (error) {
@@ -47,5 +43,9 @@ export async function signup(formData: FormData) {
   }
 
   revalidatePath("/", "layout");
-  redirect("/");
+  if (data.role == 'candidate') {
+    redirect("/profile");
+  } else {
+    redirect("/");
+  }
 }
