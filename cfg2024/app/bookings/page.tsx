@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { Calendar } from "@/components/ui/calendar";
+import { motion } from "framer-motion"; // Import framer-motion for animations
 
 const meetingTypeMap: { [key: string]: string } = {
   mock: "Mock - Interview",
@@ -16,6 +17,7 @@ const CalendarDemo = () => {
   const [duration, setDuration] = React.useState<string>("15");
   const [email, setEmail] = React.useState<string>("");
   const [error, setError] = React.useState<string>("");
+  const [showConfirmation, setShowConfirmation] = React.useState<boolean>(false);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -48,12 +50,16 @@ const CalendarDemo = () => {
     // Set the submitted data to state
     setSubmittedData(data);
 
-    // Simulate sending an email
-    alert(`Meeting confirmation sent to: ${data.emails.join(", ")}`);
+    // Show confirmation popup
+    setShowConfirmation(true);
   };
 
   const handleClearDate = () => {
     setDate(undefined);
+  };
+
+  const handleCloseConfirmation = () => {
+    setShowConfirmation(false);
   };
 
   return (
@@ -145,6 +151,27 @@ const CalendarDemo = () => {
           <p><strong>Duration:</strong> {submittedData.duration}</p>
           <p><strong>Emails:</strong> {submittedData.emails.join(", ")}</p>
         </div>
+      )}
+
+      {showConfirmation && (
+        <motion.div 
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          exit={{ scale: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <motion.div className="bg-white p-6 rounded shadow-md w-full max-w-md">
+            <h3 className="font-semibold">🎉 Congratulations!</h3>
+            <p>Meeting confirmation sent to: {submittedData?.emails.join(", ")}</p>
+            <button 
+              onClick={handleCloseConfirmation} 
+              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+            >
+              OK
+            </button>
+          </motion.div>
+        </motion.div>
       )}
     </div>
   );
