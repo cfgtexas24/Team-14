@@ -16,9 +16,9 @@ export function MainNavLinks() {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <Link href="/about" legacyBehavior passHref>
+          <Link href="/jobs" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              About Us
+              Jobs
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
