@@ -16,7 +16,6 @@ import { cn } from "@/lib/utils";
 export function MainNavLinks() {
   return (
     <NavigationMenu>
-      {/* Add space-x-4 to create horizontal space between items */}
       <NavigationMenuList className="space-x-4">
         <NavigationMenuItem>
           <motion.div whileHover={{ scale: 1.2 }}>
@@ -66,11 +65,10 @@ export function MainNavLinks() {
               <NavigationMenuLink
                 className={cn(
                   navigationMenuTriggerStyle(),
-                  "text-[#344966] hover:bg-[#344966] hover:text-white rounded-xl",
-                  "border: 2px"
+                  "text-[#344966] hover:bg-[#344966] hover:text-white rounded-xl"
                 )}
               >
-                <div className="text-2xl font-bold ">Users</div>
+                <div className="text-2xl font-bold">Users</div>
               </NavigationMenuLink>
             </Link>
           </motion.div>
@@ -109,22 +107,28 @@ export function MainNavLinks() {
               <NavigationMenuLink
                 className={cn(
                   navigationMenuTriggerStyle(),
-                  "text-[#344966] hover:bg-[#344966] hover:text-white rounded-xl",
-                  "border: 2px"
+                  "text-[#344966] hover:bg-[#344966] hover:text-white rounded-xl"
                 )}
               >
-                <div className="text-2xl font-bold ">Logout</div>
+                <div className="text-2xl font-bold">Logout</div>
               </NavigationMenuLink>
             </Link>
           </motion.div>
         </NavigationMenuItem>
         {/* New "Book Meetings" Link */}
         <NavigationMenuItem>
-          <Link href="/bookings" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Book Meetings
-            </NavigationMenuLink>
-          </Link>
+          <motion.div whileHover={{ scale: 1.2 }}>
+            <Link href="/bookings" legacyBehavior passHref>
+              <NavigationMenuLink
+                className={cn(
+                  navigationMenuTriggerStyle(),
+                  "text-[#344966] hover:bg-[#344966] hover:text-white rounded-xl"
+                )}
+              >
+                <div className="text-2xl font-bold">Book Meetings</div>
+              </NavigationMenuLink>
+            </Link>
+          </motion.div>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
