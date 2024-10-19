@@ -63,8 +63,9 @@ export default async function Page({ params }: { params: PageParams }) {
                 </CardContent>
                 <CardFooter>
                     <CardDescription className='text-clip overflow-hidden text-xl'>
+                        Salary: {"$"+job.salary.toLocaleString()}<br />
                         Skills: {Array.isArray(job.skills) ? job.skills.join(', ') : job.skills}<br></br>
-                        Qualification: {job.qualification}
+                        Qualification: {job.qualification.replace('_',' ')}
                     </CardDescription>
                 </CardFooter>
                 <div className='flex justify-end'>
