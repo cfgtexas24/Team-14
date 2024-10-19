@@ -4,7 +4,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import Talk from "talkjs";
-import { Session as TalkSession, Chatbox } from "@talkjs/react";
+import { Session as TalkSession, Chatbox } from "@talkjs/react"; 
 import { getCurrentUser } from "./action"; // Adjust the path as necessary
 import { User } from "@supabase/supabase-js";
 
@@ -46,7 +46,7 @@ export default function Chat({ conversationID }: ChatProps) {
 
     return new Talk.User({
       id: user.id,
-      name: user.email.split("@")[0],
+      name: user.email?.split("@")[0] || user.id, 
       email: user.email,
       photoUrl: "https://talkjs.com/new-web/avatar-1.jpg",
       welcomeMessage: "Hi there! Ready to chat?",
