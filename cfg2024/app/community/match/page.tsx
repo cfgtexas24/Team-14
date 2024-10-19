@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Tilt } from "react-tilt";
-import TinderCard from "react-tinder-card"; // Import react-tinder-card
+import TinderCard from "react-tinder-card";
 import {
   Card,
   CardContent,
@@ -26,12 +26,12 @@ const defaultOptions = {
 
 const CardWithForm = () => {
   const [users, setUsers] = useState([]); // State to store all users
+  const [loading, setLoading] = useState(true); // State to track loading
   const [swiped, setSwiped] = useState({}); // Track swiped state for each user
   const [error, setError] = useState(""); // State for error messages
   const currentUserId = "currentUserId"; // Replace with actual current user ID
 
   useEffect(() => {
-    // Fetch all users on component mount
     const fetchUsers = async () => {
       try {
         const data = await fetchAllUsers(); // Fetch all users
@@ -39,6 +39,8 @@ const CardWithForm = () => {
       } catch (error) {
         console.error("Error fetching users:", error);
         setError("Failed to fetch users.");
+      } finally {
+        setLoading(false); // Set loading to false when fetch is complete
       }
     };
 
@@ -48,25 +50,26 @@ const CardWithForm = () => {
   const handleSwipe = async (direction, likedId) => {
     if (direction === "right") {
       if (!currentUserId || !likedId) {
-        setError("Both liker_id and liked_id are required to create a like."); // Set error message
-        return; // Exit early if user IDs are not valid
+        setError("Both liker_id and liked_id are required to create a like.");
+        return;
       }
 
       try {
         await createLike(currentUserId, likedId); // Create a like with liker_id and liked_id
         setSwiped((prev) => ({ ...prev, [likedId]: true })); // Set swiped state for the liked user
-        setError(""); // Clear any previous error messages
+        setError("");
       } catch (error) {
         console.error("Error creating like:", error);
-        setError("Failed to create like."); // Set error message for failed operation
+        setError("Failed to create like.");
       }
     }
   };
 
   return (
-    <div className="relative w-full h-screen flex justify-center items-center"> {/* Container to hold cards */}
-      {/* Render user cards */}
-      {users.length > 0 ? (
+    <div className="relative w-full h-screen flex justify-center items-center">
+      {loading ? (
+        <div>Loading...</div> // Show loading indicator while fetching data
+      ) : users.length > 0 ? (
         users.map((user, index) => (
           !swiped[user.id] && (
             <TinderCard
@@ -105,20 +108,12 @@ const CardWithForm = () => {
           )
         ))
       ) : (
-        <div>No users found</div> // This will only show if no users are available to swipe
+        <div>No users found</div> // Show this only if loading is false and no users exist
       )}
 
-      {/* Display Error Message */}
       {error && (
         <div className="text-red-500 text-center mt-4">
           {error}
-        </div>
-      )}
-
-      {/* "No users found" message will always show below */}
-      {users.length === 0 && (
-        <div className="text-gray-500">
-          No users found
         </div>
       )}
     </div>
