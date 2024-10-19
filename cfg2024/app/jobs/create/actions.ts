@@ -10,7 +10,7 @@ export async function submitJobPosting(data: JobPostingFormData) {
   
   try {
     const skillsArray = data.skills.map(skill => skill.value);
-    const qualificationValue = data.qualifications.value;
+    const qualificationValue = data.qualification.value;
 
     console.log('Processed data:', JSON.stringify({
       ...data,

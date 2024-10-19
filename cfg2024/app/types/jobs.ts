@@ -4,11 +4,12 @@ export interface OptionType {
 }
 
 export interface JobPostingFormData {
+  id?: number;
   title: string;
   description: string;
   salary: number;
   recruiter: string;
   skills: OptionType[];
-  qualifications: OptionType;
+  qualification: OptionType;
   company: string;
 }

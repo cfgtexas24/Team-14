@@ -124,9 +124,9 @@ export default function JobPostingForm(): JSX.Element {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="qualifications">Qualifications</Label>
+            <Label htmlFor="qualification">Qualifications</Label>
             <Controller
-              name="qualifications"
+              name="qualification"
               control={control}
               render={({ field }) => (
                 <Select
@@ -139,7 +139,7 @@ export default function JobPostingForm(): JSX.Element {
                 />
               )}
             />
-            {errors.qualifications && <p className="text-red-500 text-sm">{errors.qualifications.message}</p>}
+            {errors.qualification && <p className="text-red-500 text-sm">{errors.qualification.message}</p>}
           </div>
 
           <div className="space-y-2">

@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { createClient } from '@/utils/supabase/server';
 
-export interface JobPostingData {
+interface JobPostingData {
   id?: number;
   title: string;
   description: string;
@@ -37,7 +37,8 @@ async function getJobs() {
 
 export default async function Page() {
     const { success, jobs } = await getJobs();
-
+    console.log(jobs)
+    
     if (!success) {
         return <div>Error loading jobs</div>;
     }
@@ -55,8 +56,9 @@ export default async function Page() {
                 </CardContent>
                 <CardFooter>
                     <CardDescription className='text-clip overflow-hidden'>
-                        Skills: {Array.isArray(job.skills) ? job.skills.join(', ') : job.skills}<br></br>
-                        Qualification: {job.qualification}
+                          Skills: {job.skills} 
+                          <br></br>
+                          Qualification: {job.qualification}
                     </CardDescription>
                 </CardFooter>
             </Card>
