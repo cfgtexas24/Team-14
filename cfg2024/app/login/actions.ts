@@ -37,7 +37,6 @@ export async function signup(formData: FormData): Promise<SignupResult> {
     email: formData.get("email") as string,
     password: formData.get("password") as string,
     role: formData.get("role") as string,
-    role: formData.get("role") as string,
   };
 
   // Validate inputs
