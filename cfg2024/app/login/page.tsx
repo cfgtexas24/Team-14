@@ -71,7 +71,10 @@ const Login1 = () => {
             {/* <a href="#" className="underline">
               Sign up
             </a> */}
-            <button formAction={signup}>Sign up</button>
+                    <Link href="/signup" >
+                      Sign up
+                    </Link>
+            
           </div>
         </div>
       </div>
