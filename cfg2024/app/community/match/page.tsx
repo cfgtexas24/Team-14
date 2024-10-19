@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card";
 import { createLike, fetchAllUsers } from "./actions"; // Import necessary functions
 
-// Keep your existing defaultOptions as they are
+// Default options for Tilt
 const defaultOptions = {
   reverse: false,
   max: 35,
@@ -59,7 +59,6 @@ const CardWithForm = () => {
   const [users, setUsers] = useState([]); // State to store all users
   const [loading, setLoading] = useState(true); // State to track loading
   const [swiped, setSwiped] = useState({}); // Track swiped state for each user
-  const [error, setError] = useState(""); // State for error messages
   const currentUserId = "currentUserId"; // Replace with actual current user ID
 
   useEffect(() => {
@@ -69,7 +68,6 @@ const CardWithForm = () => {
         setUsers(data); // Set the users data to state
       } catch (error) {
         console.error("Error fetching users:", error);
-        setError("Failed to fetch users.");
       } finally {
         setLoading(false); // Set loading to false when fetch is complete
       }
@@ -81,17 +79,16 @@ const CardWithForm = () => {
   const handleSwipe = async (direction, likedId) => {
     if (direction === "right") {
       if (!currentUserId || !likedId) {
-        setError("Both liker_id and liked_id are required to create a like.");
+        console.error("Both liker_id and liked_id are required to create a like.");
         return;
       }
 
       try {
         await createLike(currentUserId, likedId); // Create a like with liker_id and liked_id
         setSwiped((prev) => ({ ...prev, [likedId]: true })); // Set swiped state for the liked user
-        setError("");
       } catch (error) {
+        // Log the actual error for debugging purposes
         console.error("Error creating like:", error);
-        setError("Failed to create like.");
       }
     }
   };
@@ -158,12 +155,6 @@ const CardWithForm = () => {
           <div>No users found</div> // Show this only if loading is false and no users exist
         )}
       </div>
-
-      {error && (
-        <div className="text-red-500 text-center mt-4">
-          {error}
-        </div>
-      )}
     </div>
   );
 };

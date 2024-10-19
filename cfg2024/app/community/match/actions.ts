@@ -5,7 +5,7 @@ import { createClient } from "@/utils/supabase/server"; // Supabase client setup
 const supabase = createClient();
 
 // Function to create a like
-export async function createLike(likerId: string, likedId: string) {
+export async function createLike(likerId, likedId) {
   if (!likerId || !likedId) {
     throw new Error("Both liker_id and liked_id are required to create a like.");
   }
