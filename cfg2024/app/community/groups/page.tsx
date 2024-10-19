@@ -17,9 +17,9 @@ import employment from "@/assets/employment.jpg";
 import family from "@/assets/family.jpg";
 import geographical from "@/assets/geographical.png";
 import socioeconomic from "@/assets/socioeconomic.jpg";
-import { getCurrentUser } from "./action";
+import { getCurrentUser } from "./[conversationID]/action";
 import { User } from "@supabase/supabase-js";
-import Chat from "./Chat";
+import Chat from "./[conversationID]/Chat";
 
 const defaultOptions = {
   reverse: false,
@@ -69,7 +69,7 @@ const Match = () => {
   }
 
   return (
-    <div >
+    <div>
       <Button onClick={handleClick}>FETCH USERS</Button>
       <div className="mt-12 flex flex-wrap items-center justify-center gap-12 max-w-7xl mx-auto">
         <Tilt options={defaultOptions}>
