@@ -14,7 +14,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Image from "next/image";
-import cardImage from "@/assets/job-searching.png";
+import culture from "@/assets/culture.webp";
+import education from "@/assets/education.png";
+import employment from "@/assets/employment.jpg";
+import family from "@/assets/family.jpg";
+import geographical from "@/assets/geographical.png";
+import socioeconomic from "@/assets/socioeconomic.jpg";
 
 const Match = () => {
   const syncUser = useCallback(
@@ -56,7 +61,7 @@ const Match = () => {
               </CardHeader>
               <CardContent className="flex items-center justify-center">
                 <Image
-                  src={cardImage}
+                  src={socioeconomic}
                   alt="eco"
                   width={250}
                   height={250}
@@ -81,7 +86,7 @@ const Match = () => {
               </CardHeader>
               <CardContent className="flex items-center justify-center">
                 <Image
-                  src={cardImage}
+                  src={education}
                   alt="eco"
                   width={250}
                   height={250}
@@ -106,7 +111,7 @@ const Match = () => {
               </CardHeader>
               <CardContent className="flex items-center justify-center">
                 <Image
-                  src={cardImage}
+                  src={employment}
                   alt="eco"
                   width={250}
                   height={250}
@@ -131,7 +136,7 @@ const Match = () => {
               </CardHeader>
               <CardContent className="flex items-center justify-center">
                 <Image
-                  src={cardImage}
+                  src={family}
                   alt="eco"
                   width={250}
                   height={250}
@@ -157,7 +162,7 @@ const Match = () => {
               </CardHeader>
               <CardContent className="flex items-center justify-center">
                 <Image
-                  src={cardImage}
+                  src={culture}
                   alt="eco"
                   width={250}
                   height={250}
@@ -183,7 +188,7 @@ const Match = () => {
               </CardHeader>
               <CardContent className="flex items-center justify-center">
                 <Image
-                  src={cardImage}
+                  src={geographical}
                   alt="eco"
                   width={250}
                   height={250}
