@@ -22,11 +22,11 @@ export async function createLike(likerId, likedId) {
   return data;
 }
 
-// Function to fetch all users
+// Function to fetch all users with first_name, last_name, and roles
 export async function fetchAllUsers() {
   const { data, error } = await supabase
     .from("custom_users")
-    .select("id, email, role"); // Fetch id, email, and role fields from users table
+    .select("id, first_name, last_name, roles"); // Fetch id, first_name, last_name, and roles
 
   if (error) {
     console.error("Error fetching users:", error);

@@ -120,9 +120,12 @@ const CardWithForm = () => {
                 <Tilt options={defaultOptions} style={{ height: 400, width: 350 }}>
                   <Card className="w-full">
                     <CardHeader>
-                      {/* Email and Role remain the same */}
-                      <CardTitle className="text-2xl font-bold">{user.email}</CardTitle> {/* Display user's email */}
-                      <CardDescription className="text-lg text-gray-600">{user.role}</CardDescription> {/* Display user's role */}
+                      {/* Display user's first_name and last_name */}
+                      <CardTitle className="text-2xl font-bold">
+                        {user.first_name} {user.last_name}
+                      </CardTitle> 
+                      {/* Display user's roles */}
+                      <CardDescription className="text-lg text-gray-600">{user.roles}</CardDescription>
                     </CardHeader>
                     
                     <div className="w-full h-40">
