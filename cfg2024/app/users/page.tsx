@@ -1,10 +1,12 @@
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { createClient } from "@/utils/supabase/server";
 
 type User = {
   id: string;  // Added id field
   email: string;
   role: string;
+  first_name: string;
+  last_name: string;
 };
 
 async function getUsers() {
@@ -12,7 +14,7 @@ async function getUsers() {
 
   const { data, error } = await supabase
     .from("custom_users")
-    .select("id, email, role");  // Added id to the selection
+    .select("id, email, role, first_name, last_name");  // Added id to the selection
 
   if (error) {
     console.error(error);
@@ -35,7 +37,8 @@ export default async function UserList() {  // Changed function name to PascalCa
         {users.map((user) => (
           <Card key={user.id} className='box-border w-1/2'>
               <CardHeader>
-                  <CardTitle>{user.email} - {user.role}</CardTitle>
+                  <CardTitle>{user.first_name} {user.last_name}</CardTitle>
+                  <CardDescription>{user.email} - {user.role}</CardDescription>
               </CardHeader>
           </Card>
         ))}
