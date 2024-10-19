@@ -375,11 +375,11 @@ const chartData = [
 const chartConfig = {
   curr: {
     label: "Current",
-    color: "#2563eb",
+    color: "#344966",
   },
   prev: {
     label: "Previous",
-    color: "#60a5fa",
+    color: "#0D1821",
   },
 } satisfies ChartConfig
 
@@ -416,11 +416,11 @@ import {
 
 export const description = "A simple pie chart"
 const chartDataPie = [
-  { stage: "profile view", visitors: 300, fill: "#ff0000" }, 
-  { stage: "phone call", visitors: 200, fill: "#00ff00" }, 
-  { stage: "interview", visitors: 187, fill: "#0000ff" }, 
-  { stage: "offer", visitors: 148, fill: "#ffff00" }, 
-  { stage: "rejection", visitors: 90, fill: "#ff00ff" }, 
+  { stage: "profile view", visitors: 300, fill: "#344966" }, 
+  { stage: "phone call", visitors: 200, fill: "#8B1E3F" }, 
+  { stage: "interview", visitors: 187, fill: "#379392" }, 
+  { stage: "offer", visitors: 148, fill: "#A790A5" }, 
+  { stage: "rejection", visitors: 90, fill: "#0D1821" }, 
 ]
 const chartConfigPie = {
   visitors: {
