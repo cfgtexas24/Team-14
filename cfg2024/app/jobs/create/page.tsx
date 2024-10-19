@@ -1,43 +1,39 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
-import {
-  // Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import Select, {MultiValue, SingleValue} from 'react-select'
-
-interface OptionType {
-  value: string;
-  label: string;
-}
-
-interface JobPostingFormData {
-  title: string;
-  description: string;
-  salary: number;
-  recruiter: string;
-  skills: OptionType;
-  qualifications: OptionType;
-  location: string;
-  company: string;
-}
+import { submitJobPosting } from './actions';
+import { OptionType, JobPostingFormData } from '@/app/types/jobs';
 
 export default function JobPostingForm(): JSX.Element {
   const { register, control, handleSubmit, formState: { errors } } = useForm<JobPostingFormData>();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const onSubmit: SubmitHandler<JobPostingFormData> = (data) => {
-    console.log(data);
-    // Here you would typically send the data to your backend
+  const onSubmit: SubmitHandler<JobPostingFormData> = async (data) => {
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const result = await submitJobPosting(data);
+      if (result.success) {
+        alert('Job posted successfully!');
+        // Reset form or redirect user
+      } else {
+        setSubmitError(result.error || 'An error occurred while submitting the job posting.');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitError('An unexpected error occurred. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const qualificationOptions = [
@@ -147,21 +143,21 @@ export default function JobPostingForm(): JSX.Element {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="location">Location</Label>
-            <Input id="location" {...register("location", { required: "Location is required" })} />
-            {errors.location && <p className="text-red-500 text-sm">{errors.location.message}</p>}
-          </div>
-
-          <div className="space-y-2">
             <Label htmlFor="company">Company</Label>
             <Input id="company" {...register("company", { required: "Company is required" })} />
             {errors.company && <p className="text-red-500 text-sm">{errors.company.message}</p>}
           </div>
+
+          {submitError && <p className="text-red-500 text-sm">{submitError}</p>}
+
+          <div className="pt-6 flex justify-center">
+            <Button type="submit" className="w-full sm:w-auto">
+              { isSubmitting && <span>Submitting...</span>}
+              { !isSubmitting && <span>Submit Job Posting</span>}
+            </Button>
+          </div>
         </form>
       </CardContent>
-      <CardFooter>
-        <Button type="submit" onClick={handleSubmit(onSubmit)}>Submit Job Posting</Button>
-      </CardFooter>
     </Card>
   );
 };
